@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <title>Bestellen</title>
+    </head>
+    <body>
+        <a href="aanmelden.php?uitloggen=true">uitloggen</a>
+        <br>
+        <a href="wachtwoordwijzigen.php">Wachtwoord wijzigen</a>
+        <br>
+        <a href="besteltonen.php">Bestellingen tonen</a>
+        <h1>Bestellen</h1>
+        {{datum}}
+        <ul>
+            {% if bestelCheck %}
+                <p>Bedankt voor uw bestelling. U kan uw broodje afhalen tijdens de middagpauze.</p>
+                <a href="bestellen.php">Ik wil nog een broodje bestellen</a>
+            {% elseif belegCheck %}     {# Als je beleg hebt gekozen #}
+                <h2>Dit is uw keuze:</h2>
+                <table>
+                    <tr>
+                        <td>Broodje: </td>
+                        <td>{{gekozenBroodje.omschrijving}} (&euro;{{gekozenBroodje.prijs|number_format(2, '.', ',')}})</td>
+                    </tr>
+                    <tr>
+                        <td>Beleg: </td>
+                        <td>
+                            <ul>
+                                {% for eenGekozenBeleg in gekozenBeleg %}
+                                    <li>
+                                        {{eenGekozenBeleg.omschrijving}} (&euro;{{eenGekozenBeleg.prijs|number_format(2, '.', ',')}})
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Totaal: </td>
+                        <td>&euro;{{totaal|number_format(2, '.', ',')}}</td>
+                    </tr>
+                </table>
+                <a href="bestellen.php?bestel=true"><button>Bestel</button></a>
+                <a href="bestellen.php">Ik wil iets anders bestellen</a>
+            {% elseif broodjeCheck == false %}      {# Als je nog geen broodje hebt gekozen (eertse wat je ziet) #}
+                {% for broodje in broodjesLijst %}
+                    <li>
+                        <a href="bestellen.php?broodje={{ broodje.id }}">
+                            {{ broodje.omschrijving }}        
+                        </a>
+                        (&euro;{{broodje.prijs|number_format(2, '.', ',')}})
+                    </li>
+                {% endfor %}
+            {% elseif broodjeCheck %}       {# Als je een broodje, maar geen beleg hebt gekozen #}
+                <h2>Kies uw beleg:</h2>
+                <form action="bestellen.php?beleg=true" method="post">
+                    <table>
+                        {% for beleg in belegLijst %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="gekozenBeleg[]" value="{{beleg.id}}">
+                                </td>
+                                <td>
+                                    <label>{{beleg.omschrijving}} (&euro;{{beleg.prijs|number_format(2, '.', ',')}})</label>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Bestel">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+            {% endif %}
+        </ul>
+    </body>
+</html>
+

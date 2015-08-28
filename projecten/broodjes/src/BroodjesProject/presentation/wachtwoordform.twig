@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <title>Wachtwoord</title>
+    </head>
+    <body>
+        <a href="aanmelden.php?uitloggen=true">uitloggen</a>
+        <br>
+        <a href="bestellen.php">bestellen</a>
+        <br>
+        <a href="besteltonen.php">Bestellingen tonen</a>
+        <h1>Wachtwoord wijzigen</h1>
+        {% if leeg %}
+            <p style="color: red">Vul alle velden in!</p>
+        {% endif %}
+        {% if wachtwoord == false %}
+            <p style="color: red">Incorrect wachtwoord!</p>
+        {% endif %}
+        {% if gelijk == false %}
+            <p style="color: red">Uw nieuwe wachtwoorden komen niet overeen!</p>
+        {% endif %}
+        <form action="wachtwoordwijzigen.php?wijzig=true" method="post">
+            <table>
+                <tr>
+                    <td><label for="huidig">Huidig wachtwoord</label></td>
+                    <td><input type="password" name="huidig"></td>
+                </tr>
+                <tr>
+                    <td><label for="nieuw1">Nieuw wachtwoord</label></td>
+                    <td><input type="password" name="nieuw1"></td>
+                </tr>
+                <tr>
+                    <td><label for="nieuw2">Besvestig nieuw wachtwoord</label></td>
+                    <td><input type="password" name="nieuw2"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Wijzigen"></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <title>Registreren</title>
+    </head>
+    <body>
+        <h1>Registreren</h1>
+
+        <p style="color: red">
+            {% if error == 'wachtwoord'%}Wachtoord komt niet overeen!{% endif %}
+            {% if error == 'veldleeg'%}Vul alle velden in!{% endif %}
+        </p>
+
+        <form method="post" action="registreren.php?action=registreren">
+            <table>
+                <tr>
+                    <td><label for="voornaam">Voornaam:</label></td>
+                    <td><input type="text" name="voornaam"></td>
+                </tr>
+                <tr>
+                    <td><label for="achternaam">Achternaam:</label></td>
+                    <td><input type="text" name="achternaam"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">E-mailadres:</label></td>
+                    <td><input type="text" name="email"></td>
+                </tr>
+                <tr>
+                    <td><label for="wachtwoord">Wachtwoord:</label></td>
+                    <td><input type="password" name="wachtwoord"></td>
+                </tr>
+                <tr>
+                    <td><label for="wachtwoordCheck">Wachtwoord bevestigen:</label></td>
+                    <td><input type="password" name="wachtwoordCheck"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Registreren"></td>
+                </tr>
+            </table>
+        </form>
+        <a href="aanmelden.php">Aanmelden</a>
+    </body>
+</html>
+

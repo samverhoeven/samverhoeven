@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset=utf-8>
+<title>Boeken</title>
+</head>
+<body>
+	<h1>Boek bijwerken</h1>
+	{% if error == 'titleexists' %}
+		<p style="color: red">Titel bestaat al</p>
+	{% endif %}
+	<form method="post" action="updateboek.php?action=process&id={{boek.id}}">
+		<table>
+			<tr>
+				<td>Titel:</td>
+				<td>
+				<input type="text" name="txtTitel" value="{{boek.titel}}">
+				</td>
+			</tr>
+			<tr>
+				<td>Genre:</td>
+				<td>
+					<select name="selGenre">
+						{% for genre in genreLijst %}
+							{% if genre.id == boek.genre.id %}
+								{% set selWaarde = " selected" %}
+							{% else %}
+								{% set selWaarde = "" %}
+							{% endif %}
+							<option value="{{genre.id}}"{{selWaarde}}>
+								{{genre.omschrijving}}
+							</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="submit" value="Bijwerken">
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

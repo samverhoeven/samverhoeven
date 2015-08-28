@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <title>Bestellingen</title>
+    </head>
+    <body>
+        <a href="aanmelden.php?uitloggen=true">uitloggen</a>
+        <br>
+        <a href="wachtwoordwijzigen.php">Wachtwoord wijzigen</a>
+        <br>
+        <a href="bestellen.php">bestellen</a>
+        <h1>Mijn bestellingen</h1>
+        {% if leeg %}
+            <p>U hebt nog geen broodjes besteld</p>
+        {% else %}
+        <table>
+            <tr>
+                <th>broodje</th>
+                <th>beleg</th>
+                <th>Prijs</th>
+                <th>tijdstip</th>
+            </tr>
+            {% for bestreg in bestregels%}
+                <tr>
+                    <td>
+                        {% for broodje in broodjes %}
+                            {% if broodje.id == bestreg.broodjeid%}
+                                {{broodje.omschrijving}}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <ul>
+                            {% for belegBestreg in belegBestregels %}
+                                {% if belegBestreg.bestregid == bestreg.id %}
+                                    <li>
+                                        {% for beleg in belegOverzicht%}
+                                            {% if beleg.id == belegBestreg.belegid %}
+                                                {{ beleg.omschrijving }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        &euro;{{bestreg.regelprijs}}
+                    </td>
+                    <td>
+                        {{bestreg.tijdstip}}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </body>
+</html>

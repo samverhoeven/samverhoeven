@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <title>login form</title>
+    </head>
+    <body>
+        <h1>Inloggen</h1>
+        {% if error == 'bestaatniet' %}
+            <p style="color: red">U bent niet geregistreerd, u dient zicht eerst te registreren alvorens u kan inloggen!</p>
+        {% elseif error == 'foutegegevens'%}
+            <p style="color: red">De gegevens die u invoerde zijn niet correct!</p>
+        {% endif %}
+        <form method="post" action="aanmelden.php?action=login">
+            <table>
+                <tr>
+                    <td><label for="email">E-mailadres:</label></td>
+                    <td><input type="text" name="email"></td>
+                </tr>
+                <tr>
+                    <td><label for="wachtwoord">Wachtwoord:</label></td>
+                    <td><input type="password" name="wachtwoord"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="log in"></td>
+                </tr>
+            </table>
+        </form>
+        <a href="registreren.php">Registreren</a>
+    </body>
+</html>
+
