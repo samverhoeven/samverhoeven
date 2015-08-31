@@ -38,7 +38,9 @@ if (!isset($_SESSION["aangemeld"]) || ($_SESSION["aangemeld"] == false)) { /* Ch
         if (empty($bestregels)) {
             $leeg = true;
         } else {
-            $leeg = false;
+            $leeg = false
+                
+                ;
         }
     } else {
         $leeg = true;
