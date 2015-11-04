@@ -107,9 +107,9 @@ $(function () {
                 email: "het emailadres is ongeldig"
             }
         },
-        errorContainer: $foutBoksen,
+        /*errorContainer: $foutBoksen,
         errorLabelContainer: $("ul", $foutBoksen),
-        wrapper: "li",
+        wrapper: "li",*/
         submitHandler: function (form) {
             form.submit();
         }

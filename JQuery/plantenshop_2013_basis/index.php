@@ -72,8 +72,8 @@ if(isset($_GET['page'])){
 			$tpl['body_id'] 			= "galerij";					
 			//content
 			$tpl['rechts'] 				= getGalerij();
-			
-			
+			$tpl['paginaScripts'] = getScriptElements(array("js/vendor/jquery/lightbox/js/lightbox.js"));
+                        $tpl['paginaStylesheets'] = getLinkElements("js/vendor/jquery/lightbox/css/lightbox.css");
 
 			break;
 			
