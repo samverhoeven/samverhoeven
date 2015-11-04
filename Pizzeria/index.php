@@ -14,5 +14,24 @@ $classLoader->register();
 
 session_start();
 
-$view = $twig->render("index.twig");
+if(isset($_GET["action"])){ //checkt of er uitgelogd wordt
+    if($_GET["action"] == uitloggen){
+        $_SESSION["aangemeld"] = false;
+        unset($_SESSION["winkelmandje"]);
+        $_SESSION["prijs"] = 0;
+        
+        header("Location: index.php");
+        exit(0);
+    }
+}
+
+/* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
+
+if(!isset($_SESSION["aangemeld"])){
+    $_SESSION["aangemeld"] = false;
+}
+
+error_reporting(E_ALL & ~E_NOTICE);
+
+$view = $twig->render("index.twig", array("aangemeld" => $_SESSION["aangemeld"]));
 print($view);

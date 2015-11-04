@@ -3,38 +3,38 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BestellingService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/TijdService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BroodjeService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/DBConfig.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/loginform.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/besteltonen.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/registreren.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BelegDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/bestellingform.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/aanmelden.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Customer.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BelegService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BestregService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/bestellen.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Beleg.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BestregDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/BelegBestreg.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BelegBestregService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BelegBestregDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BestellingDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/CustomerDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/buitentijdbericht.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BelegService.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BestellingService.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BestregService.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/BroodjeService.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/CustomerService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/registratieform.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/wachtwoordwijzigen.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Bestelregel.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Bestelling.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/business/TijdService.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BelegBestregDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BelegDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BestellingDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BestregDAO.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/BroodjeDAO.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/mijnbestel.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/wachtwoordform.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/buitentijd.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/CustomerDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/data/DBConfig.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Beleg.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/BelegBestreg.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Bestelling.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Bestelregel.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Broodje.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/entities/Customer.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/bestellingform.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/buitentijdbericht.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/loginform.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/mijnbestel.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/registratieform.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/src/BroodjesProject/presentation/wachtwoordform.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/aanmelden.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/bestellen.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/besteltonen.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/buitentijd.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/registreren.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/projecten/broodjes/wachtwoordwijzigen.php</file>
         </group>
     </open-files>
 </project-private>
