@@ -46,7 +46,7 @@ class PlantenDAO extends AbstractDAO{
 				
 				foreach($rijen as $rij) {
 					$data=array();
-					for($i=0;$i<$aantalVelden;$i++){
+					for($i=1;$i<$aantalVelden;$i++){
 						  array_push($data,$rij[$i]);
 						  }
 					array_push($jsonArray,$data);
