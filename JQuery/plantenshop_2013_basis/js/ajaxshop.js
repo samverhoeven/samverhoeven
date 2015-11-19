@@ -47,10 +47,44 @@ $(function () {
         toggleZoeken(setting, $(this), $advZoeken);
         localStorage.setItem("advZoeken", setting);
     });
+    /* event handlers */
 
-    //datatables
-    $("#plantenlijst").dataTable({
+    $("#kleur, #soort_id").change(function () {
+        herlaadTabel();
+    });
+
+    $("#slider-range-hoogte").slider({
+        range: true,
+        values: [0, 5000],
+        min: 0,
+        max: 5000,
+        step: 10,
+        slide: function () {
+            $("#hoogte_min").val($(this).slider("values", 0));
+            $("#hoogte_max").val($(this).slider("values", 1));
+            herlaadTabel();
+        },
+        stop: function (event, ui) {
+            $("#hoogte_min").val($(this).slider("values", 0));
+            $("#hoogte_max").val($(this).slider("values", 1));
+            herlaadTabel();
+        }
+    });
+
+    
+
+    /* datatables */
+    var oTable = $("#plantenlijst").dataTable({
         "sAjaxSource": "ajax_json_dt_planten.php",
+        "fnServerData": function (sSource, aoData, fnCallback) {
+            $.getJSON(
+                    sSource,
+                    $('form').serializeArray(),
+                    function (json) {
+                        fnCallback(json);
+                    }
+            );
+        },
         "bPaginate": true,
         "bSort": true,
         "iDisplayLength": 20,
@@ -69,6 +103,11 @@ $(function () {
         ],
         "oLanguage": {"sUrl": "js/vendor/jquery/Datatables-1.10.10/media/js/datatables.nederlands.txt"}
     });
+    
+    function herlaadTabel() {
+        //ajaxcall vr nieuwe gegevens vanuit sAjaxSource
+        oTable.fnReloadAjax();
+    };
 });//einde doc ready
 
 function toggleZoeken(toon, $lienk, $el) {

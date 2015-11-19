@@ -34,11 +34,16 @@ $(function () {
     var $container = $("<div id='teamboks'>");
     var $diefrechts = $("<div id='teamgegevens'>");
     var $keuzelijst = $("<select id='teamkeuzelijst'>");
-    var strDeOptions = "<option value''>--- het team --- </option>";
+    /*var strDeOptions = "<option value''>--- het team --- </option>";
+    //oorspronkelijke versie
     $.each(lijst, function (n, value) {
         strDeOptions += "<option>" + value + "</option>";
     });
-    $keuzelijst.html(strDeOptions);
+    $keuzelijst.html(strDeOptions);*/
+    
+    //met custom wrapper method
+    $keuzelijst.vulSelect(lijst,"-- kies een teamlid --");
+    
     $container.append($keuzelijst).prepend($diefrechts);
     $("#team h3").after($container);
 
@@ -52,21 +57,23 @@ $(function () {
         var waarde = $(this).val();
         console.log(waarde + ' gekozen');
         $.getJSON(
-            'services/ajax_json_team.php',
-            {teamlid: waarde},
-            function (jeeson) {
-                var strHTML = "";
-                if (jeeson.naam) {
-                    strHTML += "<img src='images/" + jeeson.foto + "' />";
-                    strHTML += "<h3>" + jeeson.naam + "</h3>";
-                    strHTML += "<p>leeftijd: " + jeeson.leeftijd + "</p>";
-                    strHTML += "<p>functie: " + jeeson.functie + "</p>";
-                }
-                $('#teamgegevens').html(strHTML);
+                'services/ajax_json_team.php',
+                {teamlid: waarde},
+        function (jeeson) {
+            var strHTML = "";
+            if (jeeson.naam) {
+                strHTML += "<img src='images/" + jeeson.foto + "' />";
+                strHTML += "<h3>" + jeeson.naam + "</h3>";
+                strHTML += "<p>leeftijd: " + jeeson.leeftijd + "</p>";
+                strHTML += "<p>functie: " + jeeson.functie + "</p>";
             }
+            $('#teamgegevens').html(strHTML);
+        }
         );//einde getJSON
     });
 
+    //$.zegDankUTegen("Sam");
+    $('<li>').html($.vandaag()).prependTo('footer ul').wordtGroen();
 });//einde doc.ready
 
 var arrKoppen = ["h1", "h2", "h3", "h4", "h5", "h6"];

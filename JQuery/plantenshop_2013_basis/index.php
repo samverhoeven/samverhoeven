@@ -69,7 +69,7 @@ if (isset($_GET['page'])) {
             $tpl['body_id'] = "shop";
             //content
             $tpl['rechts'] = getAjaxPlanten();
-            $tpl['paginaScripts'] = getScriptElements(array("js/ajaxshop.js", "js/vendor/jquery/Datatables-1.10.10/media/js/dataTables.fnReloadAjax.js", "js/vendor/jquery/Datatables-1.10.10/media/js/jquery.dataTables.min.js"));
+            $tpl['paginaScripts'] = getScriptElements(array("js/vendor/jquery/Datatables-1.10.10/media/js/jquery.dataTables.min.js", "js/ajaxshop.js", "js/vendor/jquery/Datatables-1.10.10/media/js/dataTables.fnReloadAjax.js"));
             $tpl['paginaStylesheets'] = getLinkElements("js/vendor/jquery/Datatables-1.10.10/media/css/jquery.dataTables.css");
             break;
 
@@ -89,7 +89,7 @@ if (isset($_GET['page'])) {
             $tpl['body_id'] = "galerij";
             //content
             $tpl['rechts'] = getGalerij();
-            $tpl['paginaScripts'] = getScriptElements(array("js/vendor/jquery/lightbox/js/lightbox.js"));
+            $tpl['paginaScripts'] = getScriptElements(array("js/vendor/jquery/lightbox/js/lightbox.js","js/vendor/jquery/js/jquery.ui.knipoog.js","js/galerij.js"));
             $tpl['paginaStylesheets'] = getLinkElements("js/vendor/jquery/lightbox/css/lightbox.css");
 
             break;

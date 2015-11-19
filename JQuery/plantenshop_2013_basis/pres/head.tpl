@@ -24,6 +24,7 @@
 <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="js/vendor/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/vendor/jquery/jquery-ui.min.js" type="text/javascript"></script>
+<script src="js/vendor/jquery/js/jquery.sam.utils.js"></script>
 <!--localisation files datepicker-->
 <script type='text/javascript' src='js/vendor/jquery/jquery-validation-1.14.0/localization/jquery.ui.datepicker-nl-BE.js'></script>
 <script type='text/javascript' src='js/vendor/jquery/jquery-validation-1.14.0/localization/jquery.ui.datepicker-fr.js'></script>
