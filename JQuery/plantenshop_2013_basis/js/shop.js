@@ -40,11 +40,14 @@ $(function () {
     var setting = (zoek != 0 && zoek != 1) ? 0 : zoek;
     //onmiddellijk toepassen
     console.log(setting);
-    toggleZoeken(setting, $advZoekenLink, $advZoeken);
+    //variabele load om bij window load geen animatie te laten zien (daarna wel, dus load op false zetten)
+    var load = true;
+    toggleZoeken(load, setting, $advZoekenLink, $advZoeken);
+    load = false;
     $advZoekenLink.click(function (e) {
         e.preventDefault();
         setting = 1 - setting; //bitwise Xor
-        toggleZoeken(setting, $(this), $advZoeken);
+        toggleZoeken(false, setting, $(this), $advZoeken);
         localStorage.setItem("advZoeken", setting);
     });
 
@@ -70,7 +73,7 @@ $(function () {
     });
 });//einde doc ready
 
-function toggleZoeken(toon, $lienk, $el) {
+function toggleZoeken(load, toon, $lienk, $el) {
     /*
      * @toon 1|0 setting tonen of verbergen
      @$lienk de hyperlink
@@ -81,15 +84,19 @@ function toggleZoeken(toon, $lienk, $el) {
      tekst = ($el.css('display') === "none") ? "geavanceerd zoeken" : "eenvoudig zoeken";
      $lienk.text(tekst);
      });*/
-
+    
     var txt_een = "eenvoudig zoeken";
     var txt_adv = "geavanceerd zoeken";
 
-    if (toon === 1) {
+    if(toon == 1 && load == true){
+        $el.show();
+        $lienk.text(txt_een);
+    }
+    else if (toon == 1) {
         $el.show('slow');
         $lienk.text(txt_een);
     }
-    else if (toon === 0) {
+    else if (toon == 0) {
         $el.hide('fast');
         $lienk.text(txt_adv);
     }

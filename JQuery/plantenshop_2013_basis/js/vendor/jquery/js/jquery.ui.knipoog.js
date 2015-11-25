@@ -63,10 +63,12 @@
             self.element.hover(
                     function () {
                         self._active = true;
+                        self.element.parent().find("figcaption").stop(false, true);
                         self.element.cap.show("slide", {direction: "left"}, o.speed, function () {
                         });
                     },
                     function () {
+                        self.element.parent().find("figcaption").stop(false, true);
                         self.element.cap.hide("slide", {direction: "right"}, o.speed, function () {
                             self._active = false;
                             if (self._destroyCalled == true)
@@ -76,6 +78,7 @@
             );
         },
         enable: function () {
+            this.element.unbind('mouseenter mouseleave');
             $.Widget.prototype.enable.apply(this, arguments);
             this._setMouseHandler();
         },
@@ -87,6 +90,8 @@
             this.element.unbind('mouseenter mouseleave');
         },
         _setOption: function (option, value) {
+            var o = this.options;
+            this.element.parent().find("figcaption").stop(false, true);
             $.Widget.prototype._setOption.apply(this, arguments);
             this._CSStoepassen();
         },

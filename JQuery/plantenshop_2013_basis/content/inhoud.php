@@ -479,7 +479,7 @@ function getRegistreer() {
 					  </div>
 					  <div>
 						<label>geslacht<abbr class='verplicht' title='verplicht'>*</abbr>:</label>
-						<div class='controlbox'>
+						<div class='controlbox' id='sexebox'>
                                                     <label class='labelRadio' for='man'>
                                                       <input type='radio'  title='uw sexe' id='man'  name='sexe' value='m' />
                                                       Man </label>
@@ -494,7 +494,7 @@ function getRegistreer() {
 					  <legend>Uw groene keuzes</legend>
 					  <div>
 						<label>uw ruimte  is een <abbr class='verplicht' title='verplicht'>*</abbr>:</label>
-						<div class='controlbox'>
+						<div class='controlbox' id='ruimtebox'>
 						<label class='labelCheckbox' for='ruimte_bedrijf'>
 						  <input type='checkbox' title='U heeft een bedrijfsterrein dat u wil beplanten' id='ruimte_bedrijf' name='ruimte[]' value='bedrijf'   />
 						  Bedrijfsterrein </label>

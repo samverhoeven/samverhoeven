@@ -107,9 +107,20 @@ $(function () {
                 email: "het emailadres is ongeldig"
             }
         },
+        //error rechts van de gehele controlbox zetten
+        errorPlacement: function (error, element) {
+            if (element.attr("name") === "ruimte[]") {
+                error.insertAfter($("#ruimtebox"));
+            } else if (element.attr("name") === "sexe") {
+                error.insertAfter($("#sexebox"));
+            }
+            else {
+                error.insertAfter(element);
+            }
+        },
         /*errorContainer: $foutBoksen,
-        errorLabelContainer: $("ul", $foutBoksen),
-        wrapper: "li",*/
+         errorLabelContainer: $("ul", $foutBoksen),
+         wrapper: "li",*/
         submitHandler: function (form) {
             form.submit();
         }
