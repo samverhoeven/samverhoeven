@@ -1,12 +1,14 @@
 $(window).load(function () {
     //$("#inhoud").rss("https://queryfeed.net/tw?q=%40sam_verhoeven").show();
 
-    $.when(getJSONResult("https://graph.facebook.com/Coca-Cola/feed?since=2015-12-01&access_token=CAACEdEose0cBANQcjxoyOP3czxPxMiDz9gNlBqjnDWZAvbM5Nj6ZC2JFBlAeRUP4tWt5JU8DdLMNNBhz9Ke2lj081FGmtKGQiqfzy9GrPxAFx6T8mBBJjDFfm0KvaXLsXfgsQEmMhhajmeb3UqOD8XGxQ1JIrwZBHAxqFJvYZAoWWGyGpILCYQkKjN3L1uhCxnS5bXfJZCXoimjAX0u3o"),
-            getJSONResult("https://graph.facebook.com/lipton/feed?since=2015-12-01&access_token=CAACEdEose0cBANQcjxoyOP3czxPxMiDz9gNlBqjnDWZAvbM5Nj6ZC2JFBlAeRUP4tWt5JU8DdLMNNBhz9Ke2lj081FGmtKGQiqfzy9GrPxAFx6T8mBBJjDFfm0KvaXLsXfgsQEmMhhajmeb3UqOD8XGxQ1JIrwZBHAxqFJvYZAoWWGyGpILCYQkKjN3L1uhCxnS5bXfJZCXoimjAX0u3o"))
-            .done(function (json1, json2) {
+    $.when(getJSONResult("https://graph.facebook.com/cocacolabelgium/feed?since=2015-12-01&access_token=CAACEdEose0cBANQcjxoyOP3czxPxMiDz9gNlBqjnDWZAvbM5Nj6ZC2JFBlAeRUP4tWt5JU8DdLMNNBhz9Ke2lj081FGmtKGQiqfzy9GrPxAFx6T8mBBJjDFfm0KvaXLsXfgsQEmMhhajmeb3UqOD8XGxQ1JIrwZBHAxqFJvYZAoWWGyGpILCYQkKjN3L1uhCxnS5bXfJZCXoimjAX0u3o"),
+            getJSONResult("https://graph.facebook.com/lipton/feed?since=2015-12-01&access_token=CAACEdEose0cBANQcjxoyOP3czxPxMiDz9gNlBqjnDWZAvbM5Nj6ZC2JFBlAeRUP4tWt5JU8DdLMNNBhz9Ke2lj081FGmtKGQiqfzy9GrPxAFx6T8mBBJjDFfm0KvaXLsXfgsQEmMhhajmeb3UqOD8XGxQ1JIrwZBHAxqFJvYZAoWWGyGpILCYQkKjN3L1uhCxnS5bXfJZCXoimjAX0u3o"),
+            getJSONResult("https://graph.facebook.com/mcdonalds/feed?since=2015-12-01&access_token=CAACEdEose0cBANQcjxoyOP3czxPxMiDz9gNlBqjnDWZAvbM5Nj6ZC2JFBlAeRUP4tWt5JU8DdLMNNBhz9Ke2lj081FGmtKGQiqfzy9GrPxAFx6T8mBBJjDFfm0KvaXLsXfgsQEmMhhajmeb3UqOD8XGxQ1JIrwZBHAxqFJvYZAoWWGyGpILCYQkKjN3L1uhCxnS5bXfJZCXoimjAX0u3o"))
+            .done(function (json1, json2, json3) {
                 json1 = json1[0].data;
                 json2 = json2[0].data;
-                var json = json1.concat(json2);
+                json3 = json3[0].data;
+                var json = json1.concat(json2).concat(json3);
                 console.log(json);
 
                 json.sort(custom_sort);
@@ -14,17 +16,21 @@ $(window).load(function () {
                 $.each(json, function (i, value) {
                     var time = value.created_time;
                     var inhoud = "";
-                    inhoud += i+1 + ": " + value.created_time;
+                    inhoud += "<div class='post'>" + i+1 + ": " + value.created_time;
                     if (value.message != null) {
                         inhoud += " " + value.message;
                     } else {
                         inhoud += " no message";
                     }
-                    inhoud += "</br></br>";
+                    if (value.picture != null) {
+                        inhoud += " <img src=" + value.picture + " />";
+                    }
+                    inhoud += "</div>";
                     $("#inhoud").append(inhoud);
                 });
             });
-});
+});//einde window load
+
 function getJSONResult(url) {
     return $.ajax({
         url: url,
