@@ -62,9 +62,10 @@ a{
 
 /* PIZZA AFBEELDING */
 .pizza{
-    background: url(../img/pizza.jpg) no-repeat center center;
-    background-size: cover;
-    height: 400px;
+   background: transparent url(../img/pizza1.jpg) no-repeat center center;
+   background-size: cover;
+   height: 400px;
+   width: 100%;
 }
 
 /* VERANDERENDE INHOUD PER PAGINA */
@@ -93,7 +94,12 @@ footer{
 .error{
     color:red;
 }
-
+label.error{
+    margin-left: 5px;
+}
+input.error{
+    color: inherit
+}
 .nietBeschikbaar{
     pointer-events: none;
     color : #ddd;
