@@ -21,6 +21,7 @@ class KlantDAO {
     }
     
     public function getByEmail($email) { //klantgegevens ophalen adhv een emailadres
+        
         $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
         if (!isset($dbh)) {
             throw new PDOException();

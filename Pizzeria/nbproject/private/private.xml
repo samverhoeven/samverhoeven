@@ -5,14 +5,23 @@
         <group>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/entities/Bestelregel.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/entities/Bestelling.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/entities/Klant.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/index.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/afrekenen.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/scripts/js/pizzeria.js</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/DBConfig.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/ajax_json_pizzeria.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/menutonen.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/BestregService.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/BestregDAO.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/BestellingService.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/BestellingDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/KlantService.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/KlantDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/ProductDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/entities/Product.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/data/BestregDAO.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/ajax_json_bestelling.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/presentation/afrekening.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Pizzeria/src/PizzeriaProject/business/ajax_json_klanten.php</file>
         </group>
     </open-files>
 </project-private>
