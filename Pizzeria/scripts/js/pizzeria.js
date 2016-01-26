@@ -68,57 +68,6 @@ $(window).load(function () {
         }
     });
 
-    //alle emailadressen ophalen
-    /*var $emails;
-     $.getJSON(
-     "src/PizzeriaProject/business/ajax_json_klanten.php",
-     //{email: "sam@sam.com"}, //email meegeven is mogelijk
-     function (json) {
-     console.log(json);
-     $emails = json;
-     });*/
-
-    //regform validatie
-    /*$.validator.addMethod("emailCheck", function (value, element) {
-     //alle emailadressen ophalen en vergelijken met input 
-     var $vrij = true;
-     if ($.isArray($emails)) { //als er geen email aan getJSON meegegeven is
-     $.each($emails, function (index, emailvalue) {
-     if (emailvalue == value) {
-     $vrij = false;
-     }
-     });
-     } else { //als email aan getJSON meegegeven is
-     if ($emails == value) {
-     $vrij = false;
-     }
-     }
-     return $vrij;
-     });*/
-
-    /*$.validator.addMethod("emailCheck", function (value, element) {
-        var $vrij = true;
-
-        emailJSON(value, function (response) {
-            console.log(response);
-            if (response) {
-                $vrij = false;
-            };
-            console.log("Na emailJSON " + $vrij);
-        });
-        console.log("Einde validate " + $vrij);
-        return $vrij;
-    });
-
-    function emailJSON(email, callback) {
-        $.getJSON(
-                "src/PizzeriaProject/business/ajax_json_klanten.php",
-                {email: email}, //email meegeven is mogelijk
-        function (json) {
-            return callback(json);
-        });
-    }*/
-
     $("#regform").submit(function (e) {
         e.preventDefault();
     });
@@ -149,7 +98,6 @@ $(window).load(function () {
             },
             email: {
                 remote: "src/PizzeriaProject/business/ajax_json_klanten.php",
-                //emailCheck: true,
                 required: true,
                 email: true
             },

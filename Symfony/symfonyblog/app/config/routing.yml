@@ -1,0 +1,27 @@
+
+# app/config/routing.yml
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+#RedirctingController
+remove_trailing_slash:
+    path: /{url}
+    defaults: { _controller: AppBundle:Redirecting:removeTrailingSlash }
+    requirements:
+        url: .*/$
+    methods: [GET]
+
+#BlogController
+index:
+    path: /
+    defaults: { _controller: AppBundle:Blog:index }
+    
+#LuckyController      
+lucky-number:
+    path: /lucky/number/{count}
+    defaults: {_controller: AppBundle:Lucky:number}
+lucky-number-api:
+    path: /api/lucky/number
+    defaults: {_controller: AppBundle:Lucky:apiNumber}
