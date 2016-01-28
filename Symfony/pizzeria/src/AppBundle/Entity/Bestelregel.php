@@ -1,29 +1,40 @@
 <?php
 
-namespace PizzeriaProject\Entities;
+// src/AppBundle/Entity/Bestelregel.php
 
-use JsonSerializable;
+namespace AppBundle\Entity;
 
-class Bestelregel implements JsonSerializable{
+use Doctrine\ORM\Mapping as ORM;
 
-    private static $idMap = array();
-    private $id;
-    private $bestelId;
-    private $productId;
-    private $prijs;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="bestreg")
+ */
+class Bestelregel{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $bestelId;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $productId;
+    /**
+     * @ORM\Column(type="double")
+     */
+    protected $prijs;
 
     function __construct($id, $bestelId, $productId, $prijs) {
         $this->id = $id;
         $this->bestelId = $bestelId;
         $this->productId = $productId;
         $this->prijs = $prijs;
-    }
-
-    public static function create($id, $bestelId, $productId, $prijs) {
-        if (!isset(self::$idMap[$id])) {
-            self::$idMap[$id] = new Bestelregel($id, $bestelId, $productId, $prijs);
-        }
-        return self::$idMap[$id];
     }
 
     function getId() {
@@ -57,18 +68,4 @@ class Bestelregel implements JsonSerializable{
     function setPrijs($prijs) {
         $this->regelprijs = $prijs;
     }
-        
-    public function jsonSerialize()
-    {
-        return [
-            'Bestreg' => [
-                'Id' => $this->id,
-                'BestelId' => $this->bestelId,
-                'ProductId' => $this->productId,
-                'Prijs' => $this->prijs
-            ]
-        ];
-    }
 }
-
-

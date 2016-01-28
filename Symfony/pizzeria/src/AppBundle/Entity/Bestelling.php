@@ -1,15 +1,32 @@
 <?php
+// src/AppBundle/Entity/Bestelling.php
 
-namespace PizzeriaProject\Entities;
+namespace AppBundle\Entity;
 
-use JsonSerializable;
+use Doctrine\ORM\Mapping as ORM;
 
-class Bestelling implements JsonSerializable{
-
-    private static $idMap = array();
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="bestellingen")
+ */
+class Bestelling{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $klantId;
+    /**
+     * @ORM\Column(type="double")
+     */
     private $prijs;
+    /**
+     * @ORM\Column(type="text")
+     */
     private $datum;
 
     function __construct($id, $klantId, $prijs, $datum) {

@@ -1,18 +1,49 @@
 <?php
 
-namespace PizzeriaProject\Entities; 
+// src/AppBundle/Entity/Product.php
 
-use JsonSerializable;
+namespace AppBundle\Entity;
 
-class Product implements JsonSerializable{
-    private static $idMap = array();
-    private $id;
-    private $naam;
-    private $prijs;
-    private $samenstelling;
-    private $beschikbaarheid;
-    private $promotie;
-    
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="producten")
+ */
+class Product{
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $naam;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $prijs;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $samenstelling;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $beschikbaarheid;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $promotie;
+
     function __construct($id, $naam, $prijs, $samenstelling, $beschikbaarheid, $promotie) {
         $this->id = $id;
         $this->naam = $naam;
@@ -22,13 +53,6 @@ class Product implements JsonSerializable{
         $this->promotie = $promotie;
     }
 
-    public static function create($id, $naam, $prijs, $samenstelling, $beschikbaarheid, $promotie){
-        if (!isset(self::$idMap[$id])) {
-            self::$idMap[$id] = new Product($id, $naam, $prijs, $samenstelling, $beschikbaarheid, $promotie);
-        }
-        return self::$idMap[$id];
-    }
-    
     function getId() {
         return $this->id;
     }
@@ -77,18 +101,4 @@ class Product implements JsonSerializable{
         $this->promotie = $promotie;
     }
 
-    public function jsonSerialize()
-    {
-        return [
-            'Product' => [
-                'Id' => $this->id,
-                'Naam' => $this->naam,
-                'Prijs' => $this->prijs,
-                'Samenstelling' => $this->samenstelling,
-                'Beschikbaarheid' => $this->beschikbaarheid,
-                'Promotie' => $this->promotie
-            ]
-        ];
-    }
 }
-

@@ -14,9 +14,9 @@ $twig = new Twig_Environment($loader);
 $classLoader = new ClassLoader("PizzeriaProject", "src");
 $classLoader->register();
 
-session_start();
-
 $productSvc = new ProductService();
+
+session_start();
 
 if (isset($_SESSION["aangemeld"])) { //checkt of er een klant is aangemeld
     if ($_SESSION["aangemeld"]) {

@@ -1,37 +1,43 @@
 <?php
 
-use Doctrine\Common\ClassLoader;
+// src/AppBundle/Controller/IndexController.php
 
-require_once("libraries/Doctrine/Common/ClassLoader.php");
-require_once("libraries/Twig/Autoloader.php");
+namespace AppBundle\Controller;
 
-Twig_Autoloader::register();
-$loader = new Twig_Loader_Filesystem("src/PizzeriaProject/presentation");
-$twig = new Twig_Environment($loader);
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-$classLoader = new ClassLoader("PizzeriaProject", "src");
-$classLoader->register();
+class IndexController extends Controller {
 
-session_start();
+    /**
+     * @route(
+     *      path = "/home",
+     *      name = "index"
+     * ) 
+     */
+    public function showAction() {
+        if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
+            if ($_GET["action"] == uitloggen) {
+                $_SESSION["aangemeld"] = false;
+                unset($_SESSION["winkelmandje"]);
+                $_SESSION["prijs"] = 0;
 
-if(isset($_GET["action"])){ //checkt of er uitgelogd wordt
-    if($_GET["action"] == uitloggen){
-        $_SESSION["aangemeld"] = false;
-        unset($_SESSION["winkelmandje"]);
-        $_SESSION["prijs"] = 0;
-        
-        header("Location: index.php");
-        exit(0);
+                header("Location: index.php");
+                exit(0);
+            }
+        }
+
+        /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
+
+        if (!isset($_SESSION["aangemeld"])) {
+            $_SESSION["aangemeld"] = false;
+        }
+
+        error_reporting(E_ALL & ~E_NOTICE);
+
+
+        return $this->render("Pizzeria/index.html.twig", array("aangemeld" => $_SESSION["aangemeld"]));
     }
+
 }
-
-/* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
-
-if(!isset($_SESSION["aangemeld"])){
-    $_SESSION["aangemeld"] = false;
-}
-
-error_reporting(E_ALL & ~E_NOTICE);
-
-$view = $twig->render("index.twig", array("aangemeld" => $_SESSION["aangemeld"]));
-print($view);

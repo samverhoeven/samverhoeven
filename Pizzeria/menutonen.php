@@ -14,9 +14,10 @@ $twig = new Twig_Environment($loader);
 $classLoader = new ClassLoader("PizzeriaProject", "src");
 $classLoader->register();
 
+$productSvc = new ProductService();
+
 session_start();
 try {
-    $productSvc = new ProductService();
     $menu = $productSvc->getAllProducts();
 } catch (PDOException $dbe) {
     $databaseError = "Het menu kan niet geladen worden.";

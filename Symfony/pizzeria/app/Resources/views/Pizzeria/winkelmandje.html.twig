@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}Winkelmandje{% endblock %}
+{% block activemandje %}actief{% endblock %}
+{% block body %}
+    <div class="inhoud">
+        <h1>Winkelmandje</h1>
+        {% if leeg == false %} {# hier wordt winkelmandje samengevat en kan men voor bestellen kiezen #}
+            <table>
+                {% for key, product in winkelmandje%}
+                    <tr>
+                        <td>{{ product.naam }}</td>
+                        <td>({{ product.samenstelling }})</td>
+                        {% if aangemeld == true and klant.promotie == 1 %}
+                            <td>&euro; {{ product.promotie }}</td>
+                        {% else %}
+                            <td>&euro; {{ product.prijs }}</td>
+                        {% endif %}
+                        <td><a href="winkelmandje?verwijder={{ key }}">X</a></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>&euro; {{ totaalprijs }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="afrekenen.php"><button>Afrekenen</button></a>
+                    </td>
+                </tr>
+            </table>
+        {% else %} {# als winkelmandje leeg is #}
+            <p>Uw winkelmandje is leeg</p>
+        {% endif %}
+    </div>
+{% endblock %}

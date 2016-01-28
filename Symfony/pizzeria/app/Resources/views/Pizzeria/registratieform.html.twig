@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset = utf-8>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Pizzeria</title>
+        <link rel="stylesheet" href="css/pizzeria.css" />
+        <link href="scripts/jQuery/jQuery-slideshow-plugin/plugin.css" rel="stylesheet" type="text/css"/>
+        <script src="scripts/jQuery/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="scripts/jQuery/jquery-validation-1.14.0/dist/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="scripts/jQuery/jQuery-slideshow-plugin/jquery.hammer-full.min.js" type="text/javascript"></script>
+        <script src="scripts/jQuery/jQuery-slideshow-plugin/plugin.js" type="text/javascript"></script>
+        <script src="scripts/js/pizzeria.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="alles">
+            <div class="navwrap">
+                <ul class="navigatie">
+                    <li>
+                        <a href="index.php">Home</a>
+                    </li>
+                    <li>
+                        <a href="menutonen.php">Menu</a>
+                    </li>
+                    <li>
+                        <a href="winkelmandjetonen.php">Winkelmandje</a>
+                    </li>
+                    <li>
+                        <a href="inloggen.php">Log in</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="pizza"><img id="slideshow" src="img/pizza1.jpg" data-slideshow="img/pizza2.jpg|img/pizza3.jpg" /></div>
+            <div class="inhoud">
+                <h1>Registreren</h1>
+                {% if bestaat %} {# error berichten #}
+                    <p class="error">Dit emailadres is al in gebruik!</p>
+                {% endif %}
+                {% if veldleeg %}
+                    <p class="error">Alle velden dienen ingevuld te worden!</p>
+                {% endif %}
+                <form id="regform" method="post" action="registreren.php?action=registreren">
+                    <table>
+                        <tr>
+                            <td><label for="voornaam">Voornaam:</label></td>
+                            <td><input id="voornaam" type="text" name="voornaam"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="achternaam">Achternaam:</label></td>
+                            <td><input id="achternaam" type="text" name="achternaam"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="straat">Straat:</label></td>
+                            <td><input id="straat" type="text" name="straat"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="huisnummer">Huisnummer:</label></td>
+                            <td><input id="huisnummer" type="text" name="huisnummer"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="postcode">Postcode:</label></td>
+                            <td><input id="postcode" type="text" name="postcode"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="woonplaats">Woonplaats:</label></td>
+                            <td><input id="woonplaats" type="text" name="woonplaats"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="telefoon">Telefoon:</label></td>
+                            <td><input id="telefoon" type="text" name="telefoon"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="email">E-mailadres:</label></td>
+                            <td><input id="email" type="text" name="email"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="wachtwoord">Wachtwoord:</label></td>
+                            <td><input id="wachtwoord" type="password" name="wachtwoord"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Registreren"></td>
+                        </tr>
+                    </table>
+                </form>
+                <p class="error">{{databaseError}}<p>
+            </div>
+            <footer>
+                <p>Gemaakt door: Sam Verhoeven</p>
+            </footer>
+        </div>
+    </body>
+</html>

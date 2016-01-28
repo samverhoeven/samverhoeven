@@ -2,12 +2,44 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{asset('css/pizzeria.css')}}" />
+        <link href="{{asset('scripts/jQuery/jQuery-slideshow-plugin/plugin.css')}}" rel="stylesheet" type="text/css"/>
+        <script src="{{asset('scripts/jQuery/jquery-1.11.3.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('scripts/jQuery/jquery-validation-1.14.0/dist/jquery.validate.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('scripts/jQuery/jQuery-slideshow-plugin/jquery.hammer-full.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('scripts/jQuery/jQuery-slideshow-plugin/plugin.js')}}" type="text/javascript"></script>
+        <script src="{{asset('scripts/js/pizzeria.js')}}" type="text/javascript"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+        <div class="alles">
+            <div class="navwrap">
+                <ul class="navigatie">
+                    <li>
+                        <a class="{% block activeindex %}{% endblock %}" href="{{ path('index') }}">Home</a>
+                    </li>
+                    <li>
+                        <a class="{% block activemenu %}{% endblock %}" href="{{ path('menu_show') }}">Menu</a>
+                    </li>
+                    <li>
+                        <a class="{% block activemandje %}{% endblock %}" href="{{ path('winkelmandje_show') }}">Winkelmandje</a>
+                    </li>
+                    <li>
+                        {% if aangemeld %}
+                            <a href="{{ path('index') }}?action=uitloggen">Log uit</a>
+                        {% else %}
+                            <a href="{{ path('login_show') }}">Log in</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="pizza"><img id="slideshow" src="{{asset('img/pizza1.jpg')}}" data-slideshow="{{asset('img/pizza2.jpg')}}|{{asset('img/pizza3.jpg')}}" /></div>
+            {% block body %}{% endblock %}
+        <footer>
+            <p>Gemaakt door: Sam Verhoeven</p>
+        </footer>
+    </div>
+</body>
 </html>
