@@ -28,7 +28,7 @@
                     </li>
                     <li>
                         {% if aangemeld %}
-                            <a href="{{ path('index') }}?action=uitloggen">Log uit</a>
+                            <a href="{{ path('index',{'action': 'uitloggen'}) }}">Log uit</a>
                         {% else %}
                             <a href="{{ path('login_show') }}">Log in</a>
                         {% endif %}

@@ -14,9 +14,9 @@
                     <tr>
                         <td>
                             {% if product.beschikbaarheid == 1 %}
-                                <a href="menu?product={{ product.id }}">{{ product.naam }}</a>
+                                <a href="{{ path('menu_show') }}?product={{ product.id }}">{{ product.naam }}</a>
                             {% else %}
-                                <a class="nietBeschikbaar" href="menu?product={{ product.id }}">{{ product.naam }}</a> (niet beschikbaar)
+                                <a class="nietBeschikbaar" href="{{ path('menu_show') }}?product={{ product.id }}">{{ product.naam }}</a> (niet beschikbaar)
                             {% endif %}
                         </td>
                         {% if aangemeld == true and klant.promotie == 1 %}
@@ -40,7 +40,7 @@
                             {% else %}
                                 <td>&euro; {{ product.prijs }}</td>
                             {% endif %}
-                            <td><a href="menu?verwijder={{ key }}">X</a></td>
+                            <td><a href="{{ path('menu_show') }}?verwijder={{ key }}">X</a></td>
                         </tr>
                     {% endfor %}
                     <tr>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="afrekenen.php"><button>Afrekenen</button></a>
+                            <a href="{{ path('afrekenen_show') }}"><button>Afrekenen</button></a>
                         </td>
                     </tr>
                 </table>

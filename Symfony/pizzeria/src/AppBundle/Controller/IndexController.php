@@ -17,27 +17,27 @@ class IndexController extends Controller {
      * ) 
      */
     public function showAction() {
+        $session = new Session();
+        
         if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
-            if ($_GET["action"] == uitloggen) {
-                $_SESSION["aangemeld"] = false;
-                unset($_SESSION["winkelmandje"]);
-                $_SESSION["prijs"] = 0;
-
-                header("Location: index.php");
-                exit(0);
+            if ($_GET["action"] == "uitloggen") {
+                $session->set("aangemeld", false);
+                $session->remove("winkelmandje");
+                $session->set("prijs", 0);
+                
+                return $this->redirect($this->generateUrl('index'));
             }
         }
 
         /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
 
-        if (!isset($_SESSION["aangemeld"])) {
-            $_SESSION["aangemeld"] = false;
+        if (!$session->has("aangemeld")) {
+            $session->set("aangemeld",false);
         }
-
         error_reporting(E_ALL & ~E_NOTICE);
 
 
-        return $this->render("Pizzeria/index.html.twig", array("aangemeld" => $_SESSION["aangemeld"]));
+        return $this->render("Pizzeria/index.html.twig", array("aangemeld" => $session->get("aangemeld")));
     }
 
 }

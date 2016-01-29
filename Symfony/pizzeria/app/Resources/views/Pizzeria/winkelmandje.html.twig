@@ -15,7 +15,7 @@
                         {% else %}
                             <td>&euro; {{ product.prijs }}</td>
                         {% endif %}
-                        <td><a href="winkelmandje?verwijder={{ key }}">X</a></td>
+                        <td><a href="{{ path('winkelmandje_show',{'verwijder': key}) }}">X</a></td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -27,7 +27,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <a href="afrekenen.php"><button>Afrekenen</button></a>
+                        <a href="{{ path('afrekenen_show') }}"><button>Afrekenen</button></a>
                     </td>
                 </tr>
             </table>

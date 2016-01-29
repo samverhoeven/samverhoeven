@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class MenutonenController extends Controller {
+class MenuController extends Controller {
 
     /**
      * @route(
@@ -30,12 +30,12 @@ class MenutonenController extends Controller {
             $databaseError = "Het menu kan niet geladen worden.";
         }
 
-        if (isset($_SESSION["aangemeld"])) {//checkt of er een klant is aangemeld
-            if ($_SESSION["aangemeld"]) {
+        if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
+            if ($session->get("aangemeld")) {
                 $klant = $this->get("doctrine")
                         ->getmanager()
                         ->getRepository("AppBundle:Klant")
-                        ->find($_SESSION["klant"]);
+                        ->find($session->get("klant"));
             }
         }
 
@@ -46,7 +46,13 @@ class MenutonenController extends Controller {
                         ->getmanager()
                         ->getRepository("AppBundle:Product")
                         ->find($productId); /* zet de gekozen producten in een array winkelmandjes mbv een session variabele */
-                $_SESSION["winkelmandje"][] = $product;
+               
+                //$_SESSION["winkelmandje"][] = $product;
+                
+                $winkelmandje = $session->get("winkelmandje");
+                $winkelmandje[] = $product;
+                $session->set("winkelmandje", $winkelmandje);
+                
                 if (isset($klant) && $klant->getPromotie() == 1) { // checkt of klant promotie krijgt
                     $session->set("prijs", $session->get("prijs") + $product->getPromotie());
                 } else {
@@ -54,15 +60,17 @@ class MenutonenController extends Controller {
                 }
                 return $this->redirect($this->generateUrl('menu_show')); /* opnieuw uitvoeren van bovenstaande code bij verversen tegen te gaan */
             } catch (PDOException $dbe) {
-                header("Location: updateboek.php?error=dbe");
-                print($dbe);
-                exit(0);
+                $databaseError = "Menu is momenteel niet beschikbaar.";
             }
         }
 
         if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
             $verwijder = $_GET["verwijder"];
-            $verwijderId = $_SESSION["winkelmandje"][$verwijder]->getId(); /* id van product dmv key uit de array winkelmandje */
+            //$verwijderId = $_SESSION["winkelmandje"][$verwijder]->getId(); // id van product dmv key uit de array winkelmandje 
+            
+            $winkelmandje = $session->get("winkelmandje");
+            $verwijderId = $winkelmandje[$verwijder]->getId();
+            
             $verwijderproduct = $this->get("doctrine")
                     ->getmanager()
                     ->getRepository("AppBundle:Product")
@@ -72,23 +80,26 @@ class MenutonenController extends Controller {
             } else {
                 $session->set("prijs", $session->get("prijs") - $verwijderproduct->getPrijs());
             }
-            unset($_SESSION["winkelmandje"][$verwijder]);
 
+            unset($winkelmandje[$verwijder]);
+            $session->set("winkelmandje", $winkelmandje);
+            
             return $this->redirect($this->generateUrl('menu_show'));
         }
 
-        if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
-            if ($_GET["action"] == uitloggen) {
+        /*if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
+            if ($_GET["action"] == "uitloggen") {
                 $_SESSION["aangemeld"] = false;
-                unset($_SESSION["winkelmandje"]);
-                $_SESSION["prijs"] = 0;
-
-                header("Location: menutonen.php");
-                exit(0);
+                //unset($_SESSION["winkelmandje"]);
+                $session->remove("winkelmandje");
+                //$_SESSION["prijs"] = 0;
+                $session->set("prijs",0);
+                
+                return $this->redirect($this->generateUrl('menu_show'));
             }
-        }
+        }*/
 
-        if (empty($_SESSION["winkelmandje"])) { // Zorgt voor niet tonen van winkelmandje als dat leeg is
+        if (empty($session->get("winkelmandje"))) { // Zorgt voor niet tonen van winkelmandje als dat leeg is
             $leeg = true;
         } else {
             $leeg = false;
@@ -99,20 +110,20 @@ class MenutonenController extends Controller {
             $klant = null;
         }
 
-        if (!isset($_SESSION["winkelmandje"])) {
-            $_SESSION["winkelmandje"] = null;
+        if (!$session->has("winkelmandje")) {
+            $session->set("winkelmandje", []);
         }
-
-        if (!isset($_SESSION["aangemeld"])) {
-            $_SESSION["aangemeld"] = false;
+        
+        if (!$session->has("aangemeld")) {
+            $session->set("aangemeld",false);
         }
 
         if (!$session->has("prijs")) {
             $session->set("prijs", 0);
         }
-
-        return $this->render("Pizzeria/menu.html.twig", array("menu" => $menu, "winkelmandje" => $_SESSION["winkelmandje"],
-                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $_SESSION["aangemeld"], "klant" => $klant, "databaseError" => $databaseError));
+        
+        return $this->render("Pizzeria/menu.html.twig", array("menu" => $menu, "winkelmandje" => $session->get("winkelmandje"),
+                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $session->get("aangemeld"), "klant" => $klant, "databaseError" => $databaseError));
     }
 
 }

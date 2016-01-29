@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller {
-    
+
     /**
      * @route(
      *      path = "/login",
@@ -17,19 +17,20 @@ class LoginController extends Controller {
      * ) 
      */
     public function showAction() {
+        $session = new Session();
         $databaseError = null;
-        
-        if (isset($_SESSION["aangemeld"])) {//checkt of er een klant is aangemeld
-            if ($_SESSION["aangemeld"]) {
+
+        if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
+            if ($session->get("aangemeld")) {
                 return $this->redirect($this->generateUrl('index'));
             }
         }
 
         if (isset($_GET["bestellen"])) {//checkt of gebruiker van bestelpagina komt
             if ($_GET["bestellen"]) {
-                $_SESSION["bestellen"] = true;
+                $session->set("bestellen", true);
             } else {
-                $_SESSION["bestellen"] = false;
+                $session->set("bestellen", false);
             }
             return $this->redirect($this->generateUrl('login_show'));
         }
@@ -42,37 +43,72 @@ class LoginController extends Controller {
                 try {
                     $email = trim($_POST["email"]);
                     $wachtwoord = sha1(trim($_POST["wachtwoord"]));
-                    $resultaat = $klantSvc->controleerKlant($email, $wachtwoord);
+                    //$resultaat = $klantSvc->controleerKlant($email, $wachtwoord);
+
+                    /*$klant = $this->get("doctrine")
+                            ->getManager()
+                            ->createQuery("SELECT k FROM AppBundle:Klant k WHERE k.email = " . $email . " AND k.wachtwoord = " . $wachtwoord . "")
+                            ->execute();*/
+                    $klant = $this->get("doctrine")
+                                ->getmanager()
+                                ->getRepository("AppBundle:Klant")
+                                ->findOneBy(array("email" => $email, "wachtwoord" => $wachtwoord));
+                    $resultaat = false;
+                    if (isset($klant)) {
+                        $resultaat = true;
+                        echo($resultaat);
+                    }
+
                     if ($resultaat) {
-                        $_SESSION["aangemeld"] = true;
-                        $_SESSION["klant"] = $klantSvc->getKlantId($email);
+                        $session->set("aangemeld", true);
+                        //$_SESSION["klant"] = $klantSvc->getKlantId($email);
+                        /*$klant = $this->get("doctrine")
+                                ->getManager()
+                                ->createQuery("SELECT k FROM AppBundle:Klant k WHERE k.email = " . $email . "")
+                                ->execute();*/
+                        /*$klant = $this->get("doctrine")
+                                ->getmanager()
+                                ->getRepository("AppBundle:Klant")
+                                ->findBy(array("email" => $email),
+                                        array("wachtwoord" => $wachtwoord));*/
+                        $session->set("klant", $klant->getId());
+
                         setcookie("emailCookie", $email);
-                        $klant = $klantSvc->getKlantById($_SESSION["klant"]);
+
+                        //$klant = $klantSvc->getKlantById($_SESSION["klant"]);
                         if ($klant->getPromotie() == 1) { //als klant inlogd en winkelmandje al gevuld is, moet prijs herberekend worden
-                            if (!empty($_SESSION["winkelmandje"])) {
-                                $_SESSION["prijs"] = 0;
-                                foreach ($_SESSION["winkelmandje"] as $keuze) {
-                                    $_SESSION["prijs"] += $keuze->getPromotie();
+                            if (!empty($session->get("winkelmandje"))) {
+                                $session->set("prijs", 0);
+                                /* foreach ($_SESSION["winkelmandje"] as $keuze) {
+                                  $_SESSION["prijs"] += $keuze->getPromotie();
+                                  } */
+                                $prijs = 0;
+                                foreach ($session->get("winkelmandje") as $keuze) {
+                                    $prijs += $keuze->getPromotie();
+                                    $session->set("prijs", $prijs);
                                 }
                             }
                         }
-                        if (isset($_SESSION["bestellen"])) {
-                            if ($_SESSION["bestellen"]) {
-                                $_SESSION["bestellen"] = false;
-                                header("Location: afrekenen.php");
-                                exit(0);
+                        if ($session->has("bestellen")) {
+                            if ($session->get("bestellen")) {
+                                $session->set("bestellen", false);
+                                return $this->redirect($this->generateUrl('afrekenen_show'));
                             }
                         }
                         return $this->redirect($this->generateUrl('index'));
                     } else { //error handling
-                        $geregistreerd = $klantSvc->controleerGeregistreerd($email);
-                        if ($geregistreerd) {
+                        //$geregistreerd = $klantSvc->controleerGeregistreerd($email);
+                        $klant = $this->get("doctrine")
+                                ->getmanager()
+                                ->getRepository("AppBundle:Klant")
+                                ->findOneByEmail($email);
+                                        
+                        if (isset($klant)) {
                             $foutegegevens = true;
                         } else {
                             $bestaatniet = true;
                         }
                     }
-                    
                 } catch (PDOException $dbe) {
                     $databaseError = "Inloggen is op dit moment niet mogelijk.";
                 }
@@ -81,8 +117,8 @@ class LoginController extends Controller {
 
         /* Alle niet gedefiniëerde variabelen een waarde geven om notice te voorkomen */
 
-        if (!isset($_SESSION["aangemeld"])) {
-            $_SESSION["aangemeld"] = false;
+        if (!$session->has("aangemeld")) {
+            $session->set("aangemeld",false);
         }
 
         if (!isset($_COOKIE["emailCookie"])) {
@@ -91,7 +127,7 @@ class LoginController extends Controller {
 
         error_reporting(E_ALL & ~E_NOTICE);
 
-        return $this->render("Pizzeria/inlogform.html.twig", array("aangemeld" => $_SESSION["aangemeld"], "email" => $_COOKIE["emailCookie"], "foutegegevens" => $foutegegevens, "bestaatniet" => $bestaatniet, "databaseError" => $databaseError));
+        return $this->render("Pizzeria/inlogform.html.twig", array("aangemeld" => $session->get("aangemeld"), "email" => $_COOKIE["emailCookie"], "foutegegevens" => $foutegegevens, "bestaatniet" => $bestaatniet, "databaseError" => $databaseError));
     }
 
 }
