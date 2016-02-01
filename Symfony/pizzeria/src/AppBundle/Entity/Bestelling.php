@@ -1,89 +1,128 @@
 <?php
-// src/AppBundle/Entity/Bestelling.php
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * Bestelling
+ *
  * @ORM\Table(name="bestellingen")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BestellingRepository")
  */
-class Bestelling{
+class Bestelling
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="klantid", type="integer")
      */
-    private $klantId;
+    private $klantid;
+
     /**
-     * @ORM\Column(type="double")
+     * @var float
+     *
+     * @ORM\Column(name="prijs", type="float")
      */
     private $prijs;
+
     /**
-     * @ORM\Column(type="text")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datum", type="datetime")
      */
     private $datum;
 
-    function __construct($id, $klantId, $prijs, $datum) {
-        $this->id = $id;
-        $this->klantId = $klantId;
-        $this->prijs = $prijs;
-        $this->datum = $datum;
-    }
 
-    public static function create($id, $klantId, $prijs, $datum) {
-        if (!isset(self::$idMap[$id])) {
-            self::$idMap[$id] = new Bestelling($id, $klantId, $prijs, $datum);
-        }
-        return self::$idMap[$id];
-    }
-    
-    function getId() {
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    function getKlantId() {
-        return $this->klantId;
+    /**
+     * Set klantid
+     *
+     * @param integer $klantid
+     *
+     * @return Bestelling
+     */
+    public function setKlantid($klantid)
+    {
+        $this->klantid = $klantid;
+
+        return $this;
     }
 
-    function getPrijs() {
+    /**
+     * Get klantid
+     *
+     * @return int
+     */
+    public function getKlantid()
+    {
+        return $this->klantid;
+    }
+
+    /**
+     * Set prijs
+     *
+     * @param float $prijs
+     *
+     * @return Bestelling
+     */
+    public function setPrijs($prijs)
+    {
+        $this->prijs = $prijs;
+
+        return $this;
+    }
+
+    /**
+     * Get prijs
+     *
+     * @return float
+     */
+    public function getPrijs()
+    {
         return $this->prijs;
     }
 
-    function getDatum() {
+    /**
+     * Set datum
+     *
+     * @param \DateTime $datum
+     *
+     * @return Bestelling
+     */
+    public function setDatum($datum)
+    {
+        $this->datum = $datum;
+
+        return $this;
+    }
+
+    /**
+     * Get datum
+     *
+     * @return \DateTime
+     */
+    public function getDatum()
+    {
         return $this->datum;
     }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function setKlantId($klantId) {
-        $this->klantId = $klantId;
-    }
-
-    function setPrijs($prijs) {
-        $this->prijs = $prijs;
-    }
-
-    function setDatum($datum) {
-        $this->datum = $datum;
-    }
-    
-    public function jsonSerialize()
-    {
-        return [
-            'Bestelling' => [
-                'Id' => $this->id,
-                'KlantId' => $this->klantId,
-                'Prijs' => $this->prijs,
-                'Datum' => $this->datum
-            ]
-        ];
-    }
 }
+

@@ -1,187 +1,398 @@
 <?php
 
-// src/AppBundle/Entity/Klant.php
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="klanten")
+ * Klant
+ *
+ * @ORM\Table(name="klant")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\KlantRepository")
  */
-class Klant {
-
+class Klant
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="naam", type="text")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $naam;
+    private $naam;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="voornaam", type="text")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $voornaam;
+    private $voornaam;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="straat", type="text")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $straat;
+    private $straat;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="huisnummer", type="integer")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $huisnummer;
+    private $huisnummer;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="postcode", type="integer")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $postcode;
+    private $postcode;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="woonplaats", type="text")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $woonplaats;
+    private $woonplaats;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="telefoon", type="integer")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $telefoon;
+    private $telefoon;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="email", type="text")
+     * 
+     * @Assert\NotBlank()
      */
-    protected $email;
+    private $email;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="wachtwoord", type="text")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "Het emailadres '{{ value }}' is geen geldig emailadres."
+     * )
      */
-    protected $wachtwoord;
+    private $wachtwoord;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="bemerking", type="text", nullable=true)
      */
-    protected $bemerking;
+    private $bemerking;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="promotie", type="integer")
      */
-    protected $promotie;
+    private $promotie;
 
-    function __construct($id, $naam, $voornaam, $straat, $huisnummer, $postcode, $woonplaats, $telefoon, $email, $wachtwoord, $bemerking, $promotie) {
-        $this->id = $id;
-        $this->naam = $naam;
-        $this->voornaam = $voornaam;
-        $this->straat = $straat;
-        $this->huisnummer = $huisnummer;
-        $this->postcode = $postcode;
-        $this->woonplaats = $woonplaats;
-        $this->telefoon = $telefoon;
-        $this->email = $email;
-        $this->wachtwoord = $wachtwoord;
-        $this->bemerking = $bemerking;
-        $this->promotie = $promotie;
-    }
 
-    function getId() {
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    function getNaam() {
+    /**
+     * Set naam
+     *
+     * @param string $naam
+     *
+     * @return Klant
+     */
+    public function setNaam($naam)
+    {
+        $this->naam = $naam;
+
+        return $this;
+    }
+
+    /**
+     * Get naam
+     *
+     * @return string
+     */
+    public function getNaam()
+    {
         return $this->naam;
     }
 
-    function getVoornaam() {
+    /**
+     * Set voornaam
+     *
+     * @param string $voornaam
+     *
+     * @return Klant
+     */
+    public function setVoornaam($voornaam)
+    {
+        $this->voornaam = $voornaam;
+
+        return $this;
+    }
+
+    /**
+     * Get voornaam
+     *
+     * @return string
+     */
+    public function getVoornaam()
+    {
         return $this->voornaam;
     }
 
-    function getStraat() {
+    /**
+     * Set straat
+     *
+     * @param string $straat
+     *
+     * @return Klant
+     */
+    public function setStraat($straat)
+    {
+        $this->straat = $straat;
+
+        return $this;
+    }
+
+    /**
+     * Get straat
+     *
+     * @return string
+     */
+    public function getStraat()
+    {
         return $this->straat;
     }
 
-    function getHuisnummer() {
+    /**
+     * Set huisnummer
+     *
+     * @param integer $huisnummer
+     *
+     * @return Klant
+     */
+    public function setHuisnummer($huisnummer)
+    {
+        $this->huisnummer = $huisnummer;
+
+        return $this;
+    }
+
+    /**
+     * Get huisnummer
+     *
+     * @return int
+     */
+    public function getHuisnummer()
+    {
         return $this->huisnummer;
     }
 
-    function getPostcode() {
+    /**
+     * Set postcode
+     *
+     * @param integer $postcode
+     *
+     * @return Klant
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return int
+     */
+    public function getPostcode()
+    {
         return $this->postcode;
     }
 
-    function getWoonplaats() {
+    /**
+     * Set woonplaats
+     *
+     * @param string $woonplaats
+     *
+     * @return Klant
+     */
+    public function setWoonplaats($woonplaats)
+    {
+        $this->woonplaats = $woonplaats;
+
+        return $this;
+    }
+
+    /**
+     * Get woonplaats
+     *
+     * @return string
+     */
+    public function getWoonplaats()
+    {
         return $this->woonplaats;
     }
 
-    function getTelefoon() {
+    /**
+     * Set telefoon
+     *
+     * @param integer $telefoon
+     *
+     * @return Klant
+     */
+    public function setTelefoon($telefoon)
+    {
+        $this->telefoon = $telefoon;
+
+        return $this;
+    }
+
+    /**
+     * Get telefoon
+     *
+     * @return int
+     */
+    public function getTelefoon()
+    {
         return $this->telefoon;
     }
 
-    function getEmail() {
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Klant
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    function getWachtwoord() {
+    /**
+     * Set wachtwoord
+     *
+     * @param string $wachtwoord
+     *
+     * @return Klant
+     */
+    public function setWachtwoord($wachtwoord)
+    {
+        $this->wachtwoord = $wachtwoord;
+
+        return $this;
+    }
+
+    /**
+     * Get wachtwoord
+     *
+     * @return string
+     */
+    public function getWachtwoord()
+    {
         return $this->wachtwoord;
     }
 
-    function getBemerking() {
+    /**
+     * Set bemerking
+     *
+     * @param string $bemerking
+     *
+     * @return Klant
+     */
+    public function setBemerking($bemerking)
+    {
+        $this->bemerking = $bemerking;
+
+        return $this;
+    }
+
+    /**
+     * Get bemerking
+     *
+     * @return string
+     */
+    public function getBemerking()
+    {
         return $this->bemerking;
     }
 
-    function getPromotie() {
+    /**
+     * Set promotie
+     *
+     * @param integer $promotie
+     *
+     * @return Klant
+     */
+    public function setPromotie($promotie)
+    {
+        $this->promotie = $promotie;
+
+        return $this;
+    }
+
+    /**
+     * Get promotie
+     *
+     * @return int
+     */
+    public function getPromotie()
+    {
         return $this->promotie;
     }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function setNaam($naam) {
-        $this->naam = $naam;
-    }
-
-    function setVoornaam($voornaam) {
-        $this->voornaam = $voornaam;
-    }
-
-    function setStraat($straat) {
-        $this->straat = $straat;
-    }
-
-    function setHuisnummer($huisnummer) {
-        $this->huisnummer = $huisnummer;
-    }
-
-    function setPostcode($postcode) {
-        $this->postcode = $postcode;
-    }
-
-    function setWoonplaats($woonplaats) {
-        $this->woonplaats = $woonplaats;
-    }
-
-    function setTelefoon($telefoon) {
-        $this->telefoon = $telefoon;
-    }
-
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
-    function setWachtwoord($wachtwoord) {
-        $this->wachtwoord = $wachtwoord;
-    }
-
-    function setBemerking($bemerking) {
-        $this->bemerking = $bemerking;
-    }
-
-    function setPromotie($promotie) {
-        $this->promotie = $promotie;
-    }
 }
+

@@ -1,104 +1,190 @@
 <?php
 
-// src/AppBundle/Entity/Product.php
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * Product
+ *
  * @ORM\Table(name="producten")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  */
-class Product{
-
+class Product
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="naam", type="text")
      */
-    protected $naam;
+    private $naam;
 
     /**
-     * @ORM\Column(type="float")
+     * @var float
+     *
+     * @ORM\Column(name="prijs", type="float")
      */
-    protected $prijs;
+    private $prijs;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="samenstelling", type="text")
      */
-    protected $samenstelling;
+    private $samenstelling;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="beschikbaarheid", type="integer")
      */
-    protected $beschikbaarheid;
+    private $beschikbaarheid;
 
     /**
-     * @ORM\Column(type="float")
+     * @var float
+     *
+     * @ORM\Column(name="promotie", type="float")
      */
-    protected $promotie;
+    private $promotie;
 
-    function __construct($id, $naam, $prijs, $samenstelling, $beschikbaarheid, $promotie) {
-        $this->id = $id;
-        $this->naam = $naam;
-        $this->prijs = $prijs;
-        $this->samenstelling = $samenstelling;
-        $this->beschikbaarheid = $beschikbaarheid;
-        $this->promotie = $promotie;
-    }
 
-    function getId() {
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    function getNaam() {
+    /**
+     * Set naam
+     *
+     * @param string $naam
+     *
+     * @return Product
+     */
+    public function setNaam($naam)
+    {
+        $this->naam = $naam;
+
+        return $this;
+    }
+
+    /**
+     * Get naam
+     *
+     * @return string
+     */
+    public function getNaam()
+    {
         return $this->naam;
     }
 
-    function getPrijs() {
+    /**
+     * Set prijs
+     *
+     * @param float $prijs
+     *
+     * @return Product
+     */
+    public function setPrijs($prijs)
+    {
+        $this->prijs = $prijs;
+
+        return $this;
+    }
+
+    /**
+     * Get prijs
+     *
+     * @return float
+     */
+    public function getPrijs()
+    {
         return $this->prijs;
     }
 
-    function getSamenstelling() {
+    /**
+     * Set samenstelling
+     *
+     * @param string $samenstelling
+     *
+     * @return Product
+     */
+    public function setSamenstelling($samenstelling)
+    {
+        $this->samenstelling = $samenstelling;
+
+        return $this;
+    }
+
+    /**
+     * Get samenstelling
+     *
+     * @return string
+     */
+    public function getSamenstelling()
+    {
         return $this->samenstelling;
     }
 
-    function getBeschikbaarheid() {
+    /**
+     * Set beschikbaarheid
+     *
+     * @param integer $beschikbaarheid
+     *
+     * @return Product
+     */
+    public function setBeschikbaarheid($beschikbaarheid)
+    {
+        $this->beschikbaarheid = $beschikbaarheid;
+
+        return $this;
+    }
+
+    /**
+     * Get beschikbaarheid
+     *
+     * @return int
+     */
+    public function getBeschikbaarheid()
+    {
         return $this->beschikbaarheid;
     }
 
-    function getPromotie() {
+    /**
+     * Set promotie
+     *
+     * @param float $promotie
+     *
+     * @return Product
+     */
+    public function setPromotie($promotie)
+    {
+        $this->promotie = $promotie;
+
+        return $this;
+    }
+
+    /**
+     * Get promotie
+     *
+     * @return float
+     */
+    public function getPromotie()
+    {
         return $this->promotie;
     }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function setNaam($naam) {
-        $this->naam = $naam;
-    }
-
-    function setPrijs($prijs) {
-        $this->prijs = $prijs;
-    }
-
-    function setSamenstelling($samenstelling) {
-        $this->samenstelling = $samenstelling;
-    }
-
-    function setBeschikbaarheid($beschikbaarheid) {
-        $this->beschikbaarheid = $beschikbaarheid;
-    }
-
-    function setPromotie($promotie) {
-        $this->promotie = $promotie;
-    }
-
 }
+

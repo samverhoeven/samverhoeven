@@ -1,71 +1,128 @@
 <?php
 
-// src/AppBundle/Entity/Bestelregel.php
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * Bestelregel
+ *
  * @ORM\Table(name="bestreg")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BestelregelRepository")
  */
-class Bestelregel{
+class Bestelregel
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $bestelId;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $productId;
-    /**
-     * @ORM\Column(type="double")
-     */
-    protected $prijs;
+    private $id;
 
-    function __construct($id, $bestelId, $productId, $prijs) {
-        $this->id = $id;
-        $this->bestelId = $bestelId;
-        $this->productId = $productId;
-        $this->prijs = $prijs;
-    }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bestelid", type="integer")
+     */
+    private $bestelid;
 
-    function getId() {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="productid", type="integer")
+     */
+    private $productid;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prijs", type="float")
+     */
+    private $prijs;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
-    function getBestelId() {
-        return $this->bestelId;
+    /**
+     * Set bestelid
+     *
+     * @param integer $bestelid
+     *
+     * @return Bestelregel
+     */
+    public function setBestelid($bestelid)
+    {
+        $this->bestelid = $bestelid;
+
+        return $this;
     }
 
-    function getProductId() {
-        return $this->productId;
+    /**
+     * Get bestelid
+     *
+     * @return int
+     */
+    public function getBestelid()
+    {
+        return $this->bestelid;
     }
 
-    function getPrijs() {
+    /**
+     * Set productid
+     *
+     * @param integer $productid
+     *
+     * @return Bestelregel
+     */
+    public function setProductid($productid)
+    {
+        $this->productid = $productid;
+
+        return $this;
+    }
+
+    /**
+     * Get productid
+     *
+     * @return int
+     */
+    public function getProductid()
+    {
+        return $this->productid;
+    }
+
+    /**
+     * Set prijs
+     *
+     * @param float $prijs
+     *
+     * @return Bestelregel
+     */
+    public function setPrijs($prijs)
+    {
+        $this->prijs = $prijs;
+
+        return $this;
+    }
+
+    /**
+     * Get prijs
+     *
+     * @return float
+     */
+    public function getPrijs()
+    {
         return $this->prijs;
     }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
-    function setBestelId($bestelId) {
-        $this->bestelId = $bestelId;
-    }
-
-    function setProductId($productId) {
-        $this->broodjeId = $productId;
-    }
-
-    function setPrijs($prijs) {
-        $this->regelprijs = $prijs;
-    }
 }
+

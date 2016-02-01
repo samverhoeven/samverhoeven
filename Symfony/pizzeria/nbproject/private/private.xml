@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/autoload.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Entity/Product.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/security.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/afrekening.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Entity/Bestelregel.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/RegistrerenController.php</file>
@@ -19,6 +20,7 @@
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/IndexController.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/parameters.yml</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/registratieform.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Entity/Bestelling.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/AppKernel.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/config.yml</file>

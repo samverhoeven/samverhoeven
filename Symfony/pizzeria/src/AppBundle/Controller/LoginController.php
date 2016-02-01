@@ -7,6 +7,11 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Entity\Klant;
 
 class LoginController extends Controller {
 
@@ -16,10 +21,26 @@ class LoginController extends Controller {
      *      name = "login_show"
      * ) 
      */
-    public function showAction() {
+    public function showAction(Request $request) {
         $session = new Session();
+        
         $databaseError = null;
-
+        
+        $klant = new Klant();
+        
+        $form = $this->createFormBuilder($klant)
+                ->setAction($this->generateUrl('index'))
+                ->add("email",  EmailType::class)
+                ->add("wachtwoord", PasswordType::class)
+                ->add("aanmelden", SubmitType::class, array("label" => "aanmelden"))
+                ->getForm();
+        
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            return $this->redirectToRoute("index");
+        }
+        
         if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
             if ($session->get("aangemeld")) {
                 return $this->redirect($this->generateUrl('index'));
@@ -127,7 +148,7 @@ class LoginController extends Controller {
 
         error_reporting(E_ALL & ~E_NOTICE);
 
-        return $this->render("Pizzeria/inlogform.html.twig", array("aangemeld" => $session->get("aangemeld"), "email" => $_COOKIE["emailCookie"], "foutegegevens" => $foutegegevens, "bestaatniet" => $bestaatniet, "databaseError" => $databaseError));
+        return $this->render("Pizzeria/inlogform.html.twig", array("aangemeld" => $session->get("aangemeld"), "email" => $_COOKIE["emailCookie"], "foutegegevens" => $foutegegevens, "bestaatniet" => $bestaatniet, "databaseError" => $databaseError, "form" => $form->createView()));
     }
 
 }

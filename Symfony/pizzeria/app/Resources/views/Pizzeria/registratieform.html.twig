@@ -52,6 +52,9 @@
                 </tr>
             </table>
         </form>
-        <p class="error">{{databaseError}}<p>
+        <p class="error">{{databaseError}}</p>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}

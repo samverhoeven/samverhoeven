@@ -7,6 +7,13 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use AppBundle\Entity\Klant;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrerenController extends Controller {
 
@@ -16,8 +23,36 @@ class RegistrerenController extends Controller {
      *      name = "registreren_show"
      * )
      */
-    public function registrerenAction() {
+    public function registrerenAction(Request $request) {
         $session = new Session();
+        
+        $klant = new Klant();
+        
+        $form = $this->createFormBuilder($klant)
+                ->setAction($this->generateUrl('login_show'))
+                ->add("naam", TextType::class, array("label" => "Achternaam", "attr" => array("class" => "")))
+                ->add("voornaam", TextType::class, array("label" => "Vooraam"))
+                ->add("straat",TextType::class, array("label" => "Straat"))
+                ->add("huisnummer",  IntegerType::class, array("label" => "Huisnummer"))
+                ->add("postcode",IntegerType::class, array("label" => "Postcode"))
+                ->add("woonplaats",TextType::class, array("label" => "Woonplaats"))
+                ->add("telefoon",IntegerType::class, array("label" => "Telefoon"))
+                ->add("email",  EmailType::class, array("label" => "e-mailadres"))
+                ->add("wachtwoord", PasswordType::class, array("label" => "Wachtwoord"))
+                ->add("registreren", SubmitType::class, array("label" => "registreren"))
+                ->getForm();
+        
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($klant);
+            $em->flush();
+            
+            return $this->redirectToRoute("login_show");
+        }
         
         if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
             if ($session->get("aangemeld")) {
@@ -75,7 +110,7 @@ class RegistrerenController extends Controller {
 
         error_reporting(E_ALL & ~E_NOTICE);
 
-        return $this->render("Pizzeria/registratieform.html.twig", array("aangemeld" => $session->get("aangemeld"), "bestaat" => $bestaat, "veldleeg" => $veldleeg, "databaseError" => $databaseError));
+        return $this->render("Pizzeria/registratieform.html.twig", array("aangemeld" => $session->get("aangemeld"), "bestaat" => $bestaat, "veldleeg" => $veldleeg, "databaseError" => $databaseError, "form" => $form->createView()));
     }
 
 }
