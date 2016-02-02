@@ -28,7 +28,7 @@ class LoginController extends Controller {
         
         $klant = new Klant();
         
-        $form = $this->createFormBuilder($klant)
+        $form = $this->createFormBuilder($klant, ["attr" => ["id" => "inlogform"]])
                 ->setAction($this->generateUrl('index'))
                 ->add("email",  EmailType::class)
                 ->add("wachtwoord", PasswordType::class)

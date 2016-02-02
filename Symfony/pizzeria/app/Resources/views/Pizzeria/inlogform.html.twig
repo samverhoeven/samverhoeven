@@ -4,8 +4,8 @@
     <div class="inhoud">
         <h1>Inloggen</h1>
         <p><a href="{{ path('registreren_show') }}">Ik heb nog geen account</a></p>
-        {% if foutegegevens %} {# error berichten #}
-            <p class="error">U vulde een verkeerd emailadres of wachtwoord in!</p>
+        {#{% if foutegegevens %} {# error berichten #}
+            {#<p class="error">U vulde een verkeerd emailadres of wachtwoord in!</p>
         {% endif %}
         {% if bestaatniet %}
             <p class="error">Dit emailadres is nog niet geregistreerd!</p>
@@ -25,7 +25,7 @@
                     <td><input type="submit" value="log in"></td>
                 </tr>
             </table>
-        </form>
+        </form>#}
         <p class="error">{{databaseError}}</p>
         {{ form_start(form) }}
         {{ form_errors(form) }}

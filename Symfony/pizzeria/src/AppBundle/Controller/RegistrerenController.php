@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrerenController extends Controller {
 
@@ -25,35 +26,40 @@ class RegistrerenController extends Controller {
      */
     public function registrerenAction(Request $request) {
         $session = new Session();
-        
+
         $klant = new Klant();
-        
-        $form = $this->createFormBuilder($klant)
-                ->setAction($this->generateUrl('login_show'))
+
+        $form = $this->createFormBuilder($klant, ["attr" => ["id" => "regform"]])
                 ->add("naam", TextType::class, array("label" => "Achternaam", "attr" => array("class" => "")))
                 ->add("voornaam", TextType::class, array("label" => "Vooraam"))
-                ->add("straat",TextType::class, array("label" => "Straat"))
-                ->add("huisnummer",  IntegerType::class, array("label" => "Huisnummer"))
-                ->add("postcode",IntegerType::class, array("label" => "Postcode"))
-                ->add("woonplaats",TextType::class, array("label" => "Woonplaats"))
-                ->add("telefoon",IntegerType::class, array("label" => "Telefoon"))
-                ->add("email",  EmailType::class, array("label" => "e-mailadres"))
+                ->add("straat", TextType::class, array("label" => "Straat"))
+                ->add("huisnummer", IntegerType::class, array("label" => "Huisnummer"))
+                ->add("postcode", IntegerType::class, array("label" => "Postcode"))
+                ->add("woonplaats", TextType::class, array("label" => "Woonplaats"))
+                ->add("telefoon", IntegerType::class, array("label" => "Telefoon"))
+                ->add("email", EmailType::class, array("label" => "e-mailadres"))
                 ->add("wachtwoord", PasswordType::class, array("label" => "Wachtwoord"))
                 ->add("registreren", SubmitType::class, array("label" => "registreren"))
                 ->getForm();
-        
+
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($klant);
-            $em->flush();
-            
-            return $this->redirectToRoute("login_show");
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hasemail = $this->get("doctrine")
+                    ->getmanager()
+                    ->getRepository("AppBundle:Klant")
+                    ->findOneByEmail($form["email"]->getData());
+            $klant->setWachtwoord(sha1($form["wachtwoord"]->getData()));
+            $klant->setPromotie(0);
+            if(!$hasemail) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($klant);
+                $em->flush();
+
+                return $this->redirectToRoute("login_show");
+            }
         }
-        
+
         if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
             if ($session->get("aangemeld")) {
                 return $this->redirect($this->generateUrl('index'));
@@ -76,19 +82,19 @@ class RegistrerenController extends Controller {
             if ($_GET["action"] == "registreren") {
                 try {
                     $email = trim($_POST["email"]);
-                    /*$klantSvc = new KlantService();
-                    $geregistreerd = $klantSvc->controleerGeregistreerd($email);*/
+                    /* $klantSvc = new KlantService();
+                      $geregistreerd = $klantSvc->controleerGeregistreerd($email); */
                     $klant = $this->get("doctrine")
-                                ->getmanager()
-                                ->getRepository("AppBundle:Klant")
-                                ->findOneByEmail($email);
+                            ->getmanager()
+                            ->getRepository("AppBundle:Klant")
+                            ->findOneByEmail($email);
                     if (isset($klant)) {
                         $bestaat = true; //error handling
                     } else {
                         if (($_POST["voornaam"] != null) && ($_POST["achternaam"] != null) && ($_POST["straat"] != null) && ($_POST["huisnummer"] != null) && ($_POST["postcode"] != null) && ($_POST["woonplaats"] != null) && ($_POST["telefoon"] != null) && ($_POST["email"] != null) && ($_POST["wachtwoord"] != null)) {
                             $klantSvc->createKlant($_POST["achternaam"], $_POST["voornaam"], $_POST["straat"], $_POST["huisnummer"], $_POST["postcode"], $_POST["woonplaats"], $_POST["telefoon"], $_POST["email"], sha1($_POST["wachtwoord"]));
-                            
-                            
+
+
                             return $this->redirect($this->generateUrl('login_show'));
                         } else {
                             if (($_POST["voornaam"] == null) || ($_POST["achternaam"] == null) || ($_POST["straat"] == null) || ($_POST["huisnummer"] == null) || ($_POST["postcode"] == null) || ($_POST["woonplaats"] == null) || ($_POST["telefoon"] == null) || ($_POST["email"] == null) || ($_POST["wachtwoord"] == null) || ($_POST["wachtwoordCheck"] == null)) {
@@ -105,7 +111,7 @@ class RegistrerenController extends Controller {
         /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
 
         if (!$session->has("aangemeld")) {
-            $session->set("aangemeld",false);
+            $session->set("aangemeld", false);
         }
 
         error_reporting(E_ALL & ~E_NOTICE);

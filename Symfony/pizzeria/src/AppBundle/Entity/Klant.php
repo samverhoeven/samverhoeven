@@ -4,11 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Klant
  *
- * @ORM\Table(name="klant")
+ * @ORM\Table(name="klanten")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\KlantRepository")
  */
 class Klant
@@ -88,9 +89,12 @@ class Klant
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="text")
+     * @ORM\Column(name="email", type="text", unique = true)
      * 
      * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "Het emailadres '{{ value }}' is geen geldig emailadres."
+     * )
      */
     private $email;
 
@@ -100,9 +104,6 @@ class Klant
      * @ORM\Column(name="wachtwoord", type="text")
      * 
      * @Assert\NotBlank()
-     * @Assert\Email(
-     *     message = "Het emailadres '{{ value }}' is geen geldig emailadres."
-     * )
      */
     private $wachtwoord;
 
@@ -116,7 +117,7 @@ class Klant
     /**
      * @var int
      *
-     * @ORM\Column(name="promotie", type="integer")
+     * @ORM\Column(name="promotie", type="integer", options={"default":0})
      */
     private $promotie;
 
