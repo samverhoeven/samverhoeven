@@ -23,24 +23,67 @@ class LoginController extends Controller {
      */
     public function showAction(Request $request) {
         $session = new Session();
-        
+
         $databaseError = null;
-        
+
         $klant = new Klant();
-        
+
+        $foutegegevens = false;
+        $bestaatniet = false;
+
         $form = $this->createFormBuilder($klant, ["attr" => ["id" => "inlogform"]])
-                ->setAction($this->generateUrl('index'))
-                ->add("email",  EmailType::class)
+                ->add("email", EmailType::class)
                 ->add("wachtwoord", PasswordType::class)
                 ->add("aanmelden", SubmitType::class, array("label" => "aanmelden"))
                 ->getForm();
-        
+
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()){
-            return $this->redirectToRoute("index");
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $checkklant = $this->get("doctrine")
+                    ->getmanager()
+                    ->getRepository("AppBundle:Klant")
+                    ->findOneBy(array("email" => $form["email"]->getData(), "wachtwoord" => sha1($form["wachtwoord"]->getData())));
+            
+            if ($checkklant) {
+                $session->set("aangemeld", true);
+                $session->set("klant", $checkklant->getId());
+
+                setcookie("emailCookie", $form["email"]->getData());
+
+                if ($checkklant->getPromotie() == 1) { //als klant inlogd en winkelmandje al gevuld is, moet prijs herberekend worden
+                    if (!empty($session->get("winkelmandje"))) {
+                        $session->set("prijs", 0);
+                        $prijs = 0;
+                        foreach ($session->get("winkelmandje") as $keuze) {
+                            $prijs += $keuze->getPromotie();
+                            $session->set("prijs", $prijs);
+                        }
+                    }
+                }
+
+                if ($session->has("bestellen")) {
+                    if ($session->get("bestellen")) {
+                        $session->set("bestellen", false);
+                        return $this->redirect($this->generateUrl('afrekenen_show'));
+                    }
+                }
+
+                return $this->redirectToRoute("index");
+            } else {
+                $checkemail = $this->get("doctrine")
+                        ->getmanager()
+                        ->getRepository("AppBundle:Klant")
+                        ->findOneByEmail($form["email"]->getData());
+                if ($checkemail) {
+                    $foutegegevens = true;
+                } else {
+                    $bestaatniet = true;
+                }
+            }
         }
-        
+
         if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
             if ($session->get("aangemeld")) {
                 return $this->redirect($this->generateUrl('index'));
@@ -56,90 +99,10 @@ class LoginController extends Controller {
             return $this->redirect($this->generateUrl('login_show'));
         }
 
-        $foutegegevens = false;
-        $bestaatniet = false;
-
-        if (isset($_GET["action"])) {//checkt of er iemand wilt inloggen
-            if ($_GET["action"] == "login") {
-                try {
-                    $email = trim($_POST["email"]);
-                    $wachtwoord = sha1(trim($_POST["wachtwoord"]));
-                    //$resultaat = $klantSvc->controleerKlant($email, $wachtwoord);
-
-                    /*$klant = $this->get("doctrine")
-                            ->getManager()
-                            ->createQuery("SELECT k FROM AppBundle:Klant k WHERE k.email = " . $email . " AND k.wachtwoord = " . $wachtwoord . "")
-                            ->execute();*/
-                    $klant = $this->get("doctrine")
-                                ->getmanager()
-                                ->getRepository("AppBundle:Klant")
-                                ->findOneBy(array("email" => $email, "wachtwoord" => $wachtwoord));
-                    $resultaat = false;
-                    if (isset($klant)) {
-                        $resultaat = true;
-                        echo($resultaat);
-                    }
-
-                    if ($resultaat) {
-                        $session->set("aangemeld", true);
-                        //$_SESSION["klant"] = $klantSvc->getKlantId($email);
-                        /*$klant = $this->get("doctrine")
-                                ->getManager()
-                                ->createQuery("SELECT k FROM AppBundle:Klant k WHERE k.email = " . $email . "")
-                                ->execute();*/
-                        /*$klant = $this->get("doctrine")
-                                ->getmanager()
-                                ->getRepository("AppBundle:Klant")
-                                ->findBy(array("email" => $email),
-                                        array("wachtwoord" => $wachtwoord));*/
-                        $session->set("klant", $klant->getId());
-
-                        setcookie("emailCookie", $email);
-
-                        //$klant = $klantSvc->getKlantById($_SESSION["klant"]);
-                        if ($klant->getPromotie() == 1) { //als klant inlogd en winkelmandje al gevuld is, moet prijs herberekend worden
-                            if (!empty($session->get("winkelmandje"))) {
-                                $session->set("prijs", 0);
-                                /* foreach ($_SESSION["winkelmandje"] as $keuze) {
-                                  $_SESSION["prijs"] += $keuze->getPromotie();
-                                  } */
-                                $prijs = 0;
-                                foreach ($session->get("winkelmandje") as $keuze) {
-                                    $prijs += $keuze->getPromotie();
-                                    $session->set("prijs", $prijs);
-                                }
-                            }
-                        }
-                        if ($session->has("bestellen")) {
-                            if ($session->get("bestellen")) {
-                                $session->set("bestellen", false);
-                                return $this->redirect($this->generateUrl('afrekenen_show'));
-                            }
-                        }
-                        return $this->redirect($this->generateUrl('index'));
-                    } else { //error handling
-                        //$geregistreerd = $klantSvc->controleerGeregistreerd($email);
-                        $klant = $this->get("doctrine")
-                                ->getmanager()
-                                ->getRepository("AppBundle:Klant")
-                                ->findOneByEmail($email);
-                                        
-                        if (isset($klant)) {
-                            $foutegegevens = true;
-                        } else {
-                            $bestaatniet = true;
-                        }
-                    }
-                } catch (PDOException $dbe) {
-                    $databaseError = "Inloggen is op dit moment niet mogelijk.";
-                }
-            }
-        }
-
         /* Alle niet gedefiniëerde variabelen een waarde geven om notice te voorkomen */
 
         if (!$session->has("aangemeld")) {
-            $session->set("aangemeld",false);
+            $session->set("aangemeld", false);
         }
 
         if (!isset($_COOKIE["emailCookie"])) {

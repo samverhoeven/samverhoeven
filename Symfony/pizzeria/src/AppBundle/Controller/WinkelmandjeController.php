@@ -29,8 +29,7 @@ class WinkelmandjeController extends Controller {
         }
 
         if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
-            $verwijder = $_GET["verwijder"];
-            //$verwijderId = $_SESSION["winkelmandje"][$verwijder]->getId(); // id van product dmv key uit de array winkelmandje 
+            $verwijder = $_GET["verwijder"];// id van product dmv key uit de array winkelmandje 
 
             $winkelmandje = $session->get("winkelmandje");
             $verwijderId = $winkelmandje[$verwijder]->getId();
@@ -50,17 +49,6 @@ class WinkelmandjeController extends Controller {
 
             return $this->redirect($this->generateUrl('winkelmandje_show'));
         }
-
-        /*if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
-            if ($_GET["action"] == "uitloggen") {
-                $_SESSION["aangemeld"] = false;
-                unset($_SESSION["winkelmandje"]);
-                $_SESSION["prijs"] = 0;
-
-                header("Location: index.php");
-                exit(0);
-            }
-        }*/
 
         if (empty($session->get("winkelmandje"))) { // Zorgt voor niet tonen van winkelmandje als dat leeg is
             $leeg = true;

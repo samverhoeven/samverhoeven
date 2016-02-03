@@ -27,8 +27,6 @@ class Klant
      * @var string
      *
      * @ORM\Column(name="naam", type="text")
-     * 
-     * @Assert\NotBlank()
      */
     private $naam;
 
@@ -36,8 +34,6 @@ class Klant
      * @var string
      *
      * @ORM\Column(name="voornaam", type="text")
-     * 
-     * @Assert\NotBlank()
      */
     private $voornaam;
 
@@ -45,8 +41,6 @@ class Klant
      * @var string
      *
      * @ORM\Column(name="straat", type="text")
-     * 
-     * @Assert\NotBlank()
      */
     private $straat;
 
@@ -54,8 +48,6 @@ class Klant
      * @var int
      *
      * @ORM\Column(name="huisnummer", type="integer")
-     * 
-     * @Assert\NotBlank()
      */
     private $huisnummer;
 
@@ -63,8 +55,6 @@ class Klant
      * @var int
      *
      * @ORM\Column(name="postcode", type="integer")
-     * 
-     * @Assert\NotBlank()
      */
     private $postcode;
 
@@ -72,8 +62,6 @@ class Klant
      * @var string
      *
      * @ORM\Column(name="woonplaats", type="text")
-     * 
-     * @Assert\NotBlank()
      */
     private $woonplaats;
 
@@ -81,8 +69,6 @@ class Klant
      * @var int
      *
      * @ORM\Column(name="telefoon", type="integer")
-     * 
-     * @Assert\NotBlank()
      */
     private $telefoon;
 

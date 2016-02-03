@@ -18,7 +18,7 @@ class MenuController extends Controller {
      */
     public function showAction() {
         $session = new Session();
-
+        
         try {
             $menu = $this->get("doctrine")
                     ->getManager()
@@ -46,9 +46,7 @@ class MenuController extends Controller {
                         ->getmanager()
                         ->getRepository("AppBundle:Product")
                         ->find($productId); /* zet de gekozen producten in een array winkelmandjes mbv een session variabele */
-               
-                //$_SESSION["winkelmandje"][] = $product;
-                
+              
                 $winkelmandje = $session->get("winkelmandje");
                 $winkelmandje[] = $product;
                 $session->set("winkelmandje", $winkelmandje);
@@ -66,8 +64,6 @@ class MenuController extends Controller {
 
         if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
             $verwijder = $_GET["verwijder"];
-            //$verwijderId = $_SESSION["winkelmandje"][$verwijder]->getId(); // id van product dmv key uit de array winkelmandje 
-            
             $winkelmandje = $session->get("winkelmandje");
             $verwijderId = $winkelmandje[$verwijder]->getId();
             
@@ -86,18 +82,6 @@ class MenuController extends Controller {
             
             return $this->redirect($this->generateUrl('menu_show'));
         }
-
-        /*if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
-            if ($_GET["action"] == "uitloggen") {
-                $_SESSION["aangemeld"] = false;
-                //unset($_SESSION["winkelmandje"]);
-                $session->remove("winkelmandje");
-                //$_SESSION["prijs"] = 0;
-                $session->set("prijs",0);
-                
-                return $this->redirect($this->generateUrl('menu_show'));
-            }
-        }*/
 
         if (empty($session->get("winkelmandje"))) { // Zorgt voor niet tonen van winkelmandje als dat leeg is
             $leeg = true;

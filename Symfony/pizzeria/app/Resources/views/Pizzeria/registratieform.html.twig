@@ -3,10 +3,10 @@
 {% block body %}
     <div class="inhoud">
         <h1>Registreren</h1>
-        {#{% if bestaat %} {# error berichten #}
-            {#<p class="error">Dit emailadres is al in gebruik!</p>
-        {#{% endif %}
-        {% if veldleeg %}
+        {% if bestaat %} {# error berichten #}
+            <p class="error">Dit emailadres is al in gebruik!</p>
+        {% endif %}
+        {#{% if veldleeg %}
             <p class="error">Alle velden dienen ingevuld te worden!</p>
         {% endif %}
         <form id="regform" method="post" action="registreren.php?action=registreren">

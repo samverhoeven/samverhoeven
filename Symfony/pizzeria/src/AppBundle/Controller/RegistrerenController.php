@@ -29,6 +29,9 @@ class RegistrerenController extends Controller {
 
         $klant = new Klant();
 
+        $bestaat = false;
+        $veldleeg = false;
+        
         $form = $this->createFormBuilder($klant, ["attr" => ["id" => "regform"]])
                 ->add("naam", TextType::class, array("label" => "Achternaam", "attr" => array("class" => "")))
                 ->add("voornaam", TextType::class, array("label" => "Vooraam"))
@@ -45,18 +48,22 @@ class RegistrerenController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $hasemail = $this->get("doctrine")
                     ->getmanager()
                     ->getRepository("AppBundle:Klant")
                     ->findOneByEmail($form["email"]->getData());
             $klant->setWachtwoord(sha1($form["wachtwoord"]->getData()));
             $klant->setPromotie(0);
-            if(!$hasemail) {
+            
+            if(!$hasemail) {//checkt of klant bestaat met gegeven email
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($klant);
                 $em->flush();
 
                 return $this->redirectToRoute("login_show");
+            }else{
+                $bestaat = true;
             }
         }
 
@@ -73,39 +80,6 @@ class RegistrerenController extends Controller {
                 $session->set("bestellen", false);
             }
             return $this->redirect($this->generateUrl('registreren_show'));
-        }
-
-        $bestaat = false;
-        $veldleeg = false;
-
-        if (isset($_GET["action"])) {
-            if ($_GET["action"] == "registreren") {
-                try {
-                    $email = trim($_POST["email"]);
-                    /* $klantSvc = new KlantService();
-                      $geregistreerd = $klantSvc->controleerGeregistreerd($email); */
-                    $klant = $this->get("doctrine")
-                            ->getmanager()
-                            ->getRepository("AppBundle:Klant")
-                            ->findOneByEmail($email);
-                    if (isset($klant)) {
-                        $bestaat = true; //error handling
-                    } else {
-                        if (($_POST["voornaam"] != null) && ($_POST["achternaam"] != null) && ($_POST["straat"] != null) && ($_POST["huisnummer"] != null) && ($_POST["postcode"] != null) && ($_POST["woonplaats"] != null) && ($_POST["telefoon"] != null) && ($_POST["email"] != null) && ($_POST["wachtwoord"] != null)) {
-                            $klantSvc->createKlant($_POST["achternaam"], $_POST["voornaam"], $_POST["straat"], $_POST["huisnummer"], $_POST["postcode"], $_POST["woonplaats"], $_POST["telefoon"], $_POST["email"], sha1($_POST["wachtwoord"]));
-
-
-                            return $this->redirect($this->generateUrl('login_show'));
-                        } else {
-                            if (($_POST["voornaam"] == null) || ($_POST["achternaam"] == null) || ($_POST["straat"] == null) || ($_POST["huisnummer"] == null) || ($_POST["postcode"] == null) || ($_POST["woonplaats"] == null) || ($_POST["telefoon"] == null) || ($_POST["email"] == null) || ($_POST["wachtwoord"] == null) || ($_POST["wachtwoordCheck"] == null)) {
-                                $veldleeg = true; //error handling
-                            }
-                        }
-                    }
-                } catch (PDOException $dbe) {
-                    $databaseError = "Registreren is op dit moment niet mogelijk.";
-                }
-            }
         }
 
         /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */

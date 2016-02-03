@@ -4,13 +4,13 @@
     <div class="inhoud">
         <h1>Inloggen</h1>
         <p><a href="{{ path('registreren_show') }}">Ik heb nog geen account</a></p>
-        {#{% if foutegegevens %} {# error berichten #}
-            {#<p class="error">U vulde een verkeerd emailadres of wachtwoord in!</p>
+        {% if foutegegevens %} {# error berichten #}
+            <p class="error">U vulde een verkeerd emailadres of wachtwoord in!</p>
         {% endif %}
         {% if bestaatniet %}
             <p class="error">Dit emailadres is nog niet geregistreerd!</p>
         {% endif %}
-        <form id="inlogform" name="onlogform" method="post" action="{{ path('login_show',{'action': 'login'}) }}">
+        {#<form id="inlogform" name="onlogform" method="post" action="{{ path('login_show',{'action': 'login'}) }}">
             <table>
                 <tr>
                     <td><label for="email">E-mailadres:</label></td>
