@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
 
 class MenuController extends Controller {
 
@@ -16,7 +17,7 @@ class MenuController extends Controller {
      *      name = "menu_show"
      * ) 
      */
-    public function showAction() {
+    public function showAction(Request $request) {
         $session = new Session();
         
         try {
@@ -39,9 +40,9 @@ class MenuController extends Controller {
             }
         }
 
-        if (isset($_GET["product"])) {
+        if ($request->query->get("product")) {
             try {
-                $productId = $_GET["product"];
+                $productId = $request->query->get("product");
                 $product = $this->get("doctrine")
                         ->getmanager()
                         ->getRepository("AppBundle:Product")
@@ -62,8 +63,8 @@ class MenuController extends Controller {
             }
         }
 
-        if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
-            $verwijder = $_GET["verwijder"];
+        if ($request->query->get("verwijder")) { //checkt of er een item uit winkelmandje moet verwijderd worden
+            $verwijder = $request->query->get("verwijder");
             $winkelmandje = $session->get("winkelmandje");
             $verwijderId = $winkelmandje[$verwijder]->getId();
             

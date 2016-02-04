@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
 
 class WinkelmandjeController extends Controller {
 
@@ -16,7 +17,7 @@ class WinkelmandjeController extends Controller {
      *      name = "winkelmandje_show"
      * ) 
      */
-    public function showAction() {
+    public function showAction(Request $request) {
         $session = new Session();
 
         if ($session->has("aangemeld")) { //checkt of er een klant is aangemeld
@@ -28,8 +29,8 @@ class WinkelmandjeController extends Controller {
             }
         }
 
-        if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
-            $verwijder = $_GET["verwijder"];// id van product dmv key uit de array winkelmandje 
+        if ($request->query->get("verwijder")) { //checkt of er een item uit winkelmandje moet verwijderd worden
+            $verwijder = $request->query->get("verwijder");// id van product dmv key uit de array winkelmandje 
 
             $winkelmandje = $session->get("winkelmandje");
             $verwijderId = $winkelmandje[$verwijder]->getId();

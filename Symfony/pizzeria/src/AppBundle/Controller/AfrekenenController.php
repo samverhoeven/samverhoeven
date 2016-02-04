@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Bestelling;
 use AppBundle\Entity\Bestelregel;
 use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 class AfrekenenController extends Controller {
 
@@ -19,7 +20,7 @@ class AfrekenenController extends Controller {
      *      name = "afrekenen_show"
      * ) 
      */
-    public function afrekenenAction() {
+    public function afrekenenAction(Request $request) {
         $session = new Session();
 
         if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
@@ -31,8 +32,8 @@ class AfrekenenController extends Controller {
             }
         }
 
-        if (isset($_GET["verwijder"])) { //checkt of er een item uit winkelmandje moet verwijderd worden
-            $verwijder = $_GET["verwijder"]; // id van product dmv key uit de array winkelmandje 
+        if ($request->query->get("verwijder")) { //checkt of er een item uit winkelmandje moet verwijderd worden
+            $verwijder = $request->query->get("verwijder"); // id van product dmv key uit de array winkelmandje 
 
             $winkelmandje = $session->get("winkelmandje");
             $verwijderId = $winkelmandje[$verwijder]->getId();
@@ -53,7 +54,7 @@ class AfrekenenController extends Controller {
             return $this->redirect($this->generateUrl('afrekenen_show'));
         }
 
-        if (isset($_GET["besteld"])) { //bestellingsgegevens in juiste tabellen zetten
+        if ($request->query->get("besteld")) { //bestellingsgegevens in juiste tabellen zetten
             $datetime = new DateTime("now");
             
             $bestelling = new Bestelling();
@@ -86,7 +87,7 @@ class AfrekenenController extends Controller {
             return $this->redirect($this->generateUrl('afrekenen_show', array("bestelcheck" => "true")));
         }
 
-        if (isset($_GET["bestelcheck"])) { //checkt of bestelling is geplaatst om overzicht te tonen
+        if ($request->query->get("bestelcheck")) { //checkt of bestelling is geplaatst om overzicht te tonen
             $bestelcheck = true;
             
             $session->remove("winkelmandje");
@@ -97,20 +98,16 @@ class AfrekenenController extends Controller {
                     ->getRepository("AppBundle:Product")
                     ->findAll();
             
-            //$producten = ProductService::getAllProducts();
-            
             $bestelling = $this->get("doctrine")
                     ->getmanager()
-                    ->createQuery("SELECT b FROM AppBundle:Bestelling b WHERE b.klantid = ". $session->get("klant") ." ORDER BY datum DESC LIMIT 1")
-                    ->execute();
-            //$bestelling = BestellingService::getBestelling($_SESSION["klant"]);
+                    ->createQuery("SELECT b FROM AppBundle:Bestelling b WHERE b.klantid = ". $session->get("klant") ." ORDER BY b.datum DESC")
+                    ->setMaxResults(1)
+                    ->getSingleResult();
             
             $bestregels = $this->get("doctrine")
                     ->getmanager()
                     ->getRepository("AppBundle:Bestelregel")
                     ->findByBestelid($bestelling->getId());
-            
-            //$bestregels = BestregService::getBestreg($bestelling->getId());
         }
 
         /* Alle niet gedefiniëerde variabelen een waarde geven om notice te voorkomen */

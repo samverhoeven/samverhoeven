@@ -17,7 +17,7 @@ class LoginController extends Controller {
 
     /**
      * @route(
-     *      path = "/login",
+     *      path = "/inloggen",
      *      name = "login_show"
      * ) 
      */
@@ -90,8 +90,8 @@ class LoginController extends Controller {
             }
         }
 
-        if (isset($_GET["bestellen"])) {//checkt of gebruiker van bestelpagina komt
-            if ($_GET["bestellen"]) {
+        if (null !== $request->query->get("bestellen")) {//checkt of gebruiker van bestelpagina komt
+            if ($request->query->get("bestellen")) {
                 $session->set("bestellen", true);
             } else {
                 $session->set("bestellen", false);

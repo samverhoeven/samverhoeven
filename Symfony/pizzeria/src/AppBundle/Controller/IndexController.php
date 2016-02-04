@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends Controller {
 
@@ -15,12 +16,17 @@ class IndexController extends Controller {
      *      path = "/home",
      *      name = "index"
      * ) 
+     * @route(
+     *      path = "/",
+     *      name = "index"
+     * ) 
      */
-    public function showAction() {
+    public function showAction(Request $request) {
         $session = new Session();
         
-        if (isset($_GET["action"])) { //checkt of er uitgelogd wordt
-            if ($_GET["action"] == "uitloggen") {
+        if ($request->query->get("action")) { //checkt of er uitgelogd wordt
+            
+            if ($request->query->get("action") == "uitloggen") {
                 $session->set("aangemeld", false);
                 $session->remove("winkelmandje");
                 $session->set("prijs", 0);

@@ -33,6 +33,12 @@
                             <a href="{{ path('login_show') }}">Log in</a>
                         {% endif %}
                     </li>
+                    <li>
+                        <a href="{{ path("login_route") }}">Security login</a>
+                    </li>
+                    <li>
+                        <a href="{{ logout_path('main') }}">Close session</a>
+                    </li>
                 </ul>
             </div>
             <div class="pizza"><img id="slideshow" src="{{asset('img/pizza1.jpg')}}" data-slideshow="{{asset('img/pizza2.jpg')}}|{{asset('img/pizza3.jpg')}}" /></div>

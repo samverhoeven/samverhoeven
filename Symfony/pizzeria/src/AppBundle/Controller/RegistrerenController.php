@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrerenController extends Controller {
 
@@ -73,8 +72,8 @@ class RegistrerenController extends Controller {
             }
         }
 
-        if (isset($_GET["bestellen"])) {//checkt of gebruiker van bestelpagina komt
-            if ($_GET["bestellen"]) {
+        if (null!== $request->query->get("bestellen")) {//checkt of gebruiker van bestelpagina komt
+            if ($request->query->get("bestellen")) {
                 $session->set("bestellen", true);
             } else {
                 $session->set("bestellen", false);
