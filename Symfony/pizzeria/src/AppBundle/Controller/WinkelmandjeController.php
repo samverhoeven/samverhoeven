@@ -20,13 +20,11 @@ class WinkelmandjeController extends Controller {
     public function showAction(Request $request) {
         $session = new Session();
 
-        if ($session->has("aangemeld")) { //checkt of er een klant is aangemeld
-            if ($session->get("aangemeld")) {
+        if ($this->getUser()) { //checkt of er een klant is aangemeld
                 $klant = $this->get("doctrine")
                         ->getmanager()
                         ->getRepository("AppBundle:Klant")
-                        ->find($session->get("klant"));
-            }
+                        ->find($this->getUser()->getId());
         }
 
         if ($request->query->get("verwijder")) { //checkt of er een item uit winkelmandje moet verwijderd worden

@@ -31,13 +31,11 @@ class MenuController extends Controller {
             $databaseError = "Het menu kan niet geladen worden.";
         }
 
-        if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
-            if ($session->get("aangemeld")) {
+        if ($this->getUser()) {//checkt of er een klant is aangemeld
                 $klant = $this->get("doctrine")
                         ->getmanager()
                         ->getRepository("AppBundle:Klant")
-                        ->find($session->get("klant"));
-            }
+                        ->find($this->getUser()->getId());
         }
 
         if ($request->query->get("product")) {

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Klant
@@ -14,8 +13,8 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="klanten")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\KlantRepository")
  */
-class Klant extends BaseUser{
-
+class Klant
+{
     /**
      * @var int
      *
@@ -23,26 +22,26 @@ class Klant extends BaseUser{
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="naam", type="string", length=20)
+     * @ORM\Column(name="naam", type="text")
      */
     private $naam;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="voornaam", type="string", length=30)
+     * @ORM\Column(name="voornaam", type="text")
      */
     private $voornaam;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="straat", type="string", length=50)
+     * @ORM\Column(name="straat", type="text")
      */
     private $straat;
 
@@ -63,16 +62,37 @@ class Klant extends BaseUser{
     /**
      * @var string
      *
-     * @ORM\Column(name="woonplaats", type="string", length=40)
+     * @ORM\Column(name="woonplaats", type="text")
      */
     private $woonplaats;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="telefoon", type="string", length=20)
+     * @ORM\Column(name="telefoon", type="integer")
      */
     private $telefoon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="text", unique = true)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "Het emailadres '{{ value }}' is geen geldig emailadres."
+     * )
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="wachtwoord", type="text")
+     * 
+     * @Assert\NotBlank()
+     */
+    private $wachtwoord;
 
     /**
      * @var string
@@ -84,16 +104,18 @@ class Klant extends BaseUser{
     /**
      * @var int
      *
-     * @ORM\Column(name="promotie", type="integer", options={"default":0}, nullable=true)
+     * @ORM\Column(name="promotie", type="integer", options={"default":0})
      */
-    private $promotie = 0;
+    private $promotie;
+
 
     /**
      * Get id
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -104,7 +126,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setNaam($naam) {
+    public function setNaam($naam)
+    {
         $this->naam = $naam;
 
         return $this;
@@ -115,7 +138,8 @@ class Klant extends BaseUser{
      *
      * @return string
      */
-    public function getNaam() {
+    public function getNaam()
+    {
         return $this->naam;
     }
 
@@ -126,7 +150,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setVoornaam($voornaam) {
+    public function setVoornaam($voornaam)
+    {
         $this->voornaam = $voornaam;
 
         return $this;
@@ -137,7 +162,8 @@ class Klant extends BaseUser{
      *
      * @return string
      */
-    public function getVoornaam() {
+    public function getVoornaam()
+    {
         return $this->voornaam;
     }
 
@@ -148,7 +174,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setStraat($straat) {
+    public function setStraat($straat)
+    {
         $this->straat = $straat;
 
         return $this;
@@ -159,7 +186,8 @@ class Klant extends BaseUser{
      *
      * @return string
      */
-    public function getStraat() {
+    public function getStraat()
+    {
         return $this->straat;
     }
 
@@ -170,7 +198,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setHuisnummer($huisnummer) {
+    public function setHuisnummer($huisnummer)
+    {
         $this->huisnummer = $huisnummer;
 
         return $this;
@@ -181,7 +210,8 @@ class Klant extends BaseUser{
      *
      * @return int
      */
-    public function getHuisnummer() {
+    public function getHuisnummer()
+    {
         return $this->huisnummer;
     }
 
@@ -192,7 +222,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setPostcode($postcode) {
+    public function setPostcode($postcode)
+    {
         $this->postcode = $postcode;
 
         return $this;
@@ -203,7 +234,8 @@ class Klant extends BaseUser{
      *
      * @return int
      */
-    public function getPostcode() {
+    public function getPostcode()
+    {
         return $this->postcode;
     }
 
@@ -214,7 +246,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setWoonplaats($woonplaats) {
+    public function setWoonplaats($woonplaats)
+    {
         $this->woonplaats = $woonplaats;
 
         return $this;
@@ -225,7 +258,8 @@ class Klant extends BaseUser{
      *
      * @return string
      */
-    public function getWoonplaats() {
+    public function getWoonplaats()
+    {
         return $this->woonplaats;
     }
 
@@ -236,7 +270,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setTelefoon($telefoon) {
+    public function setTelefoon($telefoon)
+    {
         $this->telefoon = $telefoon;
 
         return $this;
@@ -247,8 +282,57 @@ class Klant extends BaseUser{
      *
      * @return int
      */
-    public function getTelefoon() {
+    public function getTelefoon()
+    {
         return $this->telefoon;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Klant
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set wachtwoord
+     *
+     * @param string $wachtwoord
+     *
+     * @return Klant
+     */
+    public function setWachtwoord($wachtwoord)
+    {
+        $this->wachtwoord = $wachtwoord;
+
+        return $this;
+    }
+
+    /**
+     * Get wachtwoord
+     *
+     * @return string
+     */
+    public function getWachtwoord()
+    {
+        return $this->wachtwoord;
     }
 
     /**
@@ -258,7 +342,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setBemerking($bemerking) {
+    public function setBemerking($bemerking)
+    {
         $this->bemerking = $bemerking;
 
         return $this;
@@ -269,7 +354,8 @@ class Klant extends BaseUser{
      *
      * @return string
      */
-    public function getBemerking() {
+    public function getBemerking()
+    {
         return $this->bemerking;
     }
 
@@ -280,7 +366,8 @@ class Klant extends BaseUser{
      *
      * @return Klant
      */
-    public function setPromotie($promotie) {
+    public function setPromotie($promotie)
+    {
         $this->promotie = $promotie;
 
         return $this;
@@ -291,7 +378,9 @@ class Klant extends BaseUser{
      *
      * @return int
      */
-    public function getPromotie() {
+    public function getPromotie()
+    {
         return $this->promotie;
     }
 }
+

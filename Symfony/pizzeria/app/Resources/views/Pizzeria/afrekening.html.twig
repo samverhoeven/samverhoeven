@@ -49,9 +49,9 @@
             {% endif %}
         {% else %} {# als gebruiker nog niet is ingelogd als hij wilt afrekeken #}
             <p>U dient ingelogd te zijn om af te rekenen.</p>
-            <a href="{{ path('login_show', {'bestellen': 'true'}) }}">Log in</a>
+            <a href="{{ path('fos_user_security_login', {'bestellen': 'true'}) }}">Log in</a>
             <br>
-            <a href="{{ path('registreren_show',{'bestellen': 'true'}) }}">Registreren</a>
+            <a href="{{ path('fos_user_registration_register',{'bestellen': 'true'}) }}">Registreren</a>
         {% endif %}
     </div>
 {% endblock %}

@@ -4,15 +4,15 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+        #db_provider:
+        #    entity:
+        #        class: AppBundle:Klant
+        #        property: email
         in_memory:
             memory: 
                 users:
-                    sam:
-                        password: $2y$12$2HlyvvB.E8lB9U7jQrjB4O1OngheUJFo/URsUnEGmvET7vYh3R5he
-                        roles: "ROLE_USER"
-                    admin:
-                        password: $2y$12$tvzSc7QeSf.0OwbbgD2DkO/fCXEqmGFiVLhTkwhjhSFrPktChJJGq
-                        roles: "ROLE_ADMIN"
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -21,15 +21,12 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            http_basic: ~
+            pattern: ^/
             form_login:
-                login_path: /login
-                check_path: /login_check
+                provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-            logout: 
-                path: /logout
-                target: index
+            logout: true
+            anonymous: true
             # activate different ways to authenticate
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
@@ -39,8 +36,9 @@ security:
     access_control:
         # require ROLE_ADMIN for /admin*
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
     
     encoders:
-        Symfony\Component\Security\Core\User\User: 
-            algorithm: bcrypt
-            cost: 12
+        FOS\UserBundle\Model\UserInterface: bcrypt

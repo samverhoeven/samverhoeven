@@ -23,13 +23,11 @@ class AfrekenenController extends Controller {
     public function afrekenenAction(Request $request) {
         $session = new Session();
 
-        if ($session->has("aangemeld")) {//checkt of er een klant is aangemeld
-            if ($session->get("klant")) {
+        if ($this->getUser()) {//checkt of er een klant is aangemeld
                 $klant = $this->get("doctrine")
                         ->getmanager()
                         ->getRepository("AppBundle:Klant")
-                        ->find($session->get("klant"));
-            }
+                        ->find($this->getUser()->getId());
         }
 
         if ($request->query->get("verwijder")) { //checkt of er een item uit winkelmandje moet verwijderd worden
@@ -58,7 +56,7 @@ class AfrekenenController extends Controller {
             $datetime = new DateTime("now");
             
             $bestelling = new Bestelling();
-            $bestelling->setKlantid($session->get("klant"));
+            $bestelling->setKlantid($this->getUser()->getId());
             $bestelling->setPrijs($session->get("prijs"));
             $bestelling->setDatum($datetime);
 
@@ -66,8 +64,7 @@ class AfrekenenController extends Controller {
             $em->persist($bestelling);
             $em->flush();
             $bestellingId = $bestelling->getId();
-
-            //$bestellingId = BestellingService::createBestelling($_SESSION["klant"], $_SESSION["prijs"], date("Y-m-d - H:i:sa"));
+            
             foreach (($session->get("winkelmandje")) as $product) {
                 $bestreg = new Bestelregel();
                 if ($klant->getPromotie() == 1) { //checkt of promotieprijs of gewone prijs aan bestreg moet meegegeven worden
@@ -100,7 +97,7 @@ class AfrekenenController extends Controller {
             
             $bestelling = $this->get("doctrine")
                     ->getmanager()
-                    ->createQuery("SELECT b FROM AppBundle:Bestelling b WHERE b.klantid = ". $session->get("klant") ." ORDER BY b.datum DESC")
+                    ->createQuery("SELECT b FROM AppBundle:Bestelling b WHERE b.klantid = ". $this->getUser()->getId() ." ORDER BY b.datum DESC")
                     ->setMaxResults(1)
                     ->getSingleResult();
             
@@ -128,10 +125,6 @@ class AfrekenenController extends Controller {
             $producten = null;
         }
 
-        if (!$session->has("aangemeld")) {
-            $session->set("aangemeld", false);
-        }
-
         if (!isset($bestelcheck)) {
             $bestelcheck = false;
         }
@@ -141,7 +134,7 @@ class AfrekenenController extends Controller {
         }
 
         return $this->render("Pizzeria/afrekening.html.twig", array("winkelmandje" => $session->get("winkelmandje"),
-                    "totaalprijs" => $session->get("prijs"), "aangemeld" => $session->get("aangemeld"),
+                    "totaalprijs" => $session->get("prijs"), "aangemeld" => $this->getUser(),
                     "bestelcheck" => $bestelcheck, "bestelling" => $bestelling, "bestregels" => $bestregels,
                     "producten" => $producten, "klant" => $klant));
     }

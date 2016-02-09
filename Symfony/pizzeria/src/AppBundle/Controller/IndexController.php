@@ -24,13 +24,16 @@ class IndexController extends Controller {
     public function showAction(Request $request) {
         $session = new Session();
         
+        /*if ($this->getUser()) { //user ophalen van FOS UserBundle
+            echo($this->getUser()->getId());
+        }*/
+
         if ($request->query->get("action")) { //checkt of er uitgelogd wordt
-            
             if ($request->query->get("action") == "uitloggen") {
                 $session->set("aangemeld", false);
                 $session->remove("winkelmandje");
                 $session->set("prijs", 0);
-                
+
                 return $this->redirect($this->generateUrl('index'));
             }
         }
@@ -38,7 +41,7 @@ class IndexController extends Controller {
         /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
 
         if (!$session->has("aangemeld")) {
-            $session->set("aangemeld",false);
+            $session->set("aangemeld", false);
         }
         error_reporting(E_ALL & ~E_NOTICE);
 
