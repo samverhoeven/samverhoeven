@@ -77,7 +77,3 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationType
-    
-services:
-    fos_user.doctrine_registry:
-        alias: doctrine

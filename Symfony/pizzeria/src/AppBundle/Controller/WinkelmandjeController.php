@@ -72,7 +72,7 @@ class WinkelmandjeController extends Controller {
         error_reporting(E_ALL & ~E_NOTICE);
 
         return $this->render("Pizzeria/winkelmandje.html.twig", array("winkelmandje" => $session->get("winkelmandje"),
-                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $session->get("aangemeld"), "klant" => $klant));
+                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $this->getUser(), "klant" => $klant));
     }
 
 }

@@ -13,10 +13,6 @@ class IndexController extends Controller {
 
     /**
      * @route(
-     *      path = "/home",
-     *      name = "index"
-     * ) 
-     * @route(
      *      path = "/",
      *      name = "index"
      * ) 
@@ -40,13 +36,14 @@ class IndexController extends Controller {
 
         /* Niet gedefiniëerde variabele een waarde geven om notice te voorkomen */
 
-        if (!$session->has("aangemeld")) {
-            $session->set("aangemeld", false);
+        if (!$session->has("login")) {
+            $session->set("login", "niet ingelogd");
         }
+        
         error_reporting(E_ALL & ~E_NOTICE);
 
 
-        return $this->render("Pizzeria/index.html.twig", array("aangemeld" => $session->get("aangemeld")));
+        return $this->render("Pizzeria/index.html.twig", array("aangemeld" => $this->getUser(), "login" => $session->get("login")));
     }
 
 }

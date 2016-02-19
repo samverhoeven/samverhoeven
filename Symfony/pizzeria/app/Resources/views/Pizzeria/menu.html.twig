@@ -19,7 +19,7 @@
                                 <a class="nietBeschikbaar" href="{{ path('menu_show') }}?product={{ product.id }}">{{ product.naam }}</a> (niet beschikbaar)
                             {% endif %}
                         </td>
-                        {% if aangemeld == true and klant.promotie == 1 %}
+                        {% if aangemeld and klant.promotie == 1 %}
                             <td>&euro; {{ product.promotie }}</td>
                         {% else %}
                             <td>&euro; {{ product.prijs }}</td>

@@ -10,7 +10,7 @@
                     <tr>
                         <td>{{ product.naam }}</td>
                         <td>({{ product.samenstelling }})</td>
-                        {% if aangemeld == true and klant.promotie == 1 %}
+                        {% if aangemeld and klant.promotie == 1 %}
                             <td>&euro; {{ product.promotie }}</td>
                         {% else %}
                             <td>&euro; {{ product.prijs }}</td>

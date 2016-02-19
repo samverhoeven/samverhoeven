@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AngularJS Test</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="test1.css" rel="stylesheet"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-app="myApp">
+            First Name: <input type="text" ng-model="firstName"><br>
+            Last Name: <input type="text" ng-model="lastName"><br>
+            Full Name: (buiten myCtrl, via $rootScope) <span ng-bind='fullName() | uppercase'></span> (filter uppercase)
+            <hr>
+            <div ng-controller="myCtrl">
+                <p>Name: <input type="text" ng-model="name"></p>
+                <h1>Hello <span ng-bind="name"></span></h1>
+                <hr>
+                <p>Getal: <input type="number" ng-model="getal"></p>
+                <p>Berekening: <span ng-bind="getal|currency: '€'"></span> maal 2 = <span ng-bind="getal + getal"></span></p>
+                <hr>
+                First Name: <input type="text" ng-model="firstName"><br>
+                Last Name: <input type="text" ng-model="lastName"><br>
+                <br>
+                Full Name: (via ng-bind) <span ng-bind="fullName()"></span> 
+                <hr>
+                <p>Aan de hand van object person:</p>
+                First Name: <input type="text" ng-model="person.firstName"><br>
+                Last Name: <input type="text" ng-model="person.lastName"><br>
+                <br>
+                Full Name: (via expressions) <span ng-bind="person.firstName + ' ' + person.lastName"></span> 
+                <hr>
+                <p>Voor een kleur in: <input style="background-color:{{myCol}}" ng-model="myCol" value="{{myCol}}"></p> 
+                <hr>
+                <p>Som van array: <span ng-bind="arraySum(numbers)"></span></p>
+                <hr>
+                <p>Ordered by country:</p>
+                <input type="text" ng-model="test">
+                <ul>
+                    <li ng-repeat="x in names| orderBy:'country' | filter : test" ng-bind='x.name + ", " + x.country'>
+                    </li>
+                </ul>
+                <hr>
+                <p>Sorteren door op heading te klikken. Custom filter op country.</p>
+                <table>
+                    <tr>
+                        <th>Index</th>
+                        <th ng-click="orderByMe('name')">Name</th>
+                        <th ng-click="orderByMe('country')">Country</th>
+                    </tr>
+                    <tr ng-repeat="x in names| orderBy: myOrderBy">
+                        <td ng-if="$even" ng-bind="$index + 1"></td>
+                        <td ng-if="$odd" ng-bind="$index + 1" style="background-color:#f1f1f1"></td>
+                        <td ng-if="$even" ng-bind="x.name"></td>
+                        <td ng-if="$odd" ng-bind="x.name" style="background-color:#f1f1f1"></td>
+                        <td ng-if="$even" ng-bind="x.country | myFormat"></td>
+                        <td ng-if="$odd" ng-bind="x.country | myFormat" style="background-color:#f1f1f1"></td>
+                    </tr>
+                </table>
+                <hr>
+                <p>URL: <span ng-bind="myUrl"></span></p>
+                <hr>
+                <p>Facebook berichten van Coca-Cola:</p>
+                <p>Zoeken in berichten: <input ng-model="fbTest" type="text"/></p>
+                <table>
+                    <tr>
+                        <th ng-click="orderFBByMe($index)">Index</th>
+                        <th ng-click="orderFBByMe('-created_time')">Date</th> <!-- minteken voor created_time bepaald ascending of descending -->
+                        <th ng-click="orderFBByMe('message')">Message</th>
+                    </tr>
+                    <tr ng-repeat="x in fbData| orderBy: myOrderFBBy | filter : fbTest">
+                        <td ng-if="$even" ng-bind="$index + 1"></td>
+                        <td ng-if="$odd" ng-bind="$index + 1" style="background-color:#f1f1f1"></td>
+                        <td ng-if="$even" ng-bind="x.created_time"></td>
+                        <td ng-if="$odd" ng-bind="x.created_time" style="background-color:#f1f1f1"></td>
+                        <td ng-if="$even" ng-bind="x.message"></td>
+                        <td ng-if="$odd" ng-bind="x.message" style="background-color:#f1f1f1"></td>
+                    </tr>
+                </table>
+                <hr>
+                <p>Dropdown selectiemenu invullen:</p>
+                <select ng-model="selectedName" ng-options="x.name for x in names"></select>
+                <p>Bij ng-option kan het geselecteerde als object meegeven worden (niet bij ng-repeat):</p>
+                <p>You selected <span ng-bind="selectedName.name"></span>, who lives in <span ng-bind="selectedName.country"></span></p>
+                <hr>
+                <h1 ng-mouseover="countFunction()">Mouse over me!</h1>
+                <button ng-click="countFunction()">Click me!</button>
+                <h2 ng-bind="count"></h2>
+                <hr>
+                <p>Toggle show:</p>
+                <button ng-click="toggleShow()">Show/Hide</button>
+                <h1 ng-show="visible">I'm visible</h1>
+                <hr>
+                <p>Form validatie:</p>
+                <form name="myForm">
+                    <div class="form-group">
+                        <label for="myName">Naam:</label>
+                        <input type="text" name="myName" ng-model='myName' required>
+                        <span class="error" ng-show="myForm.myName.$touched && myForm.myName.$invalid">Naam invullen is verplicht.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="myEmail">Email:</label>
+                        <input name="myEmail" ng-model="myEmail" type="email" required >
+                        <div class="error error-box">
+                            <span ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.email">Vul een geldig emailadres in.</span>
+                            <span ng-show="myForm.myEmail.$touched && myForm.myEmail.$error.required">Email invullen is verplicht.</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="myApp.js"></script>
+        <script src="myCtrl.js"></script>
+    </body>
+</html>

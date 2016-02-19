@@ -106,7 +106,7 @@ class MenuController extends Controller {
         }
         
         return $this->render("Pizzeria/menu.html.twig", array("menu" => $menu, "winkelmandje" => $session->get("winkelmandje"),
-                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $session->get("aangemeld"), "klant" => $klant, "databaseError" => $databaseError));
+                    "totaalprijs" => $session->get("prijs"), "leeg" => $leeg, "aangemeld" => $this->getUser(), "klant" => $klant, "databaseError" => $databaseError));
     }
 
 }

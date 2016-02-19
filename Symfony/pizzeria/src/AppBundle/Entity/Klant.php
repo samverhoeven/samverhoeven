@@ -14,7 +14,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="klanten")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\KlantRepository")
  */
-class Klant extends BaseUser{
+class Klant extends BaseUser {
 
     /**
      * @var int
@@ -87,7 +87,12 @@ class Klant extends BaseUser{
      * @ORM\Column(name="promotie", type="integer", options={"default":0}, nullable=true)
      */
     private $promotie = 0;
-
+    
+    public function __construct() {
+        parent::__construct();
+        $this->roles = array('ROLE_USER'); //ROLE_USER wordt als default waarde aan klant gegeven
+    }
+    
     /**
      * Get id
      *
@@ -294,4 +299,5 @@ class Klant extends BaseUser{
     public function getPromotie() {
         return $this->promotie;
     }
+
 }
