@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AngularJS Test</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/test1.css" rel="stylesheet"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <h1>myApp</h1>
+            <hr>
+            First Name: <input type="text" ng-model="firstName"><br>
+            Last Name: <input type="text" ng-model="lastName"><br>
+            Full Name: (buiten myCtrl, via $rootScope) <span ng-bind='fullName() | uppercase'></span> (filter uppercase)
+            <hr>
+            <ul>
+                <li><a href="#/page1">Page 1</a></li>
+                <li><a href="#/page2">Page 2</a></li>
+            </ul>
+            <hr>
+            <div ng-view></div>
+        </div>
+
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+    </body>
+</html>

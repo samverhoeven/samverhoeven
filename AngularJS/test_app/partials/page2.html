@@ -1,0 +1,30 @@
+<h2>myCtrl2</h2>
+<hr>
+<p>Facebook berichten van Coca-Cola:</p>
+<p>Zoeken in berichten: <input ng-model="fbTest" type="text"/></p>
+<table>
+    <tr>
+        <th ng-click="orderFBByMe($index)">Index</th>
+        <th ng-click="orderFBByMe('-created_time')">Date</th> <!-- minteken voor created_time bepaald ascending of descending -->
+        <th ng-click="orderFBByMe('message')">Message</th>
+    </tr>
+    <tr ng-repeat="x in fbData| orderBy: myOrderFBBy | filter : fbTest">
+        <td ng-if="$even" ng-bind="$index + 1"></td>
+        <td ng-if="$odd" ng-bind="$index + 1" style="background-color:#f1f1f1"></td>
+        <td ng-if="$even" ng-bind="x.created_time"></td>
+        <td ng-if="$odd" ng-bind="x.created_time" style="background-color:#f1f1f1"></td>
+        <td ng-if="$even" ng-bind="x.message"></td>
+        <td ng-if="$odd" ng-bind="x.message" style="background-color:#f1f1f1"></td>
+    </tr>
+</table>
+<hr>
+<table>
+    <tr>
+        <th>Index</th>
+        <th>Team</th>
+    </tr>
+    <tr ng-repeat="x in footballData">
+        <td ng-bind="$index + 1"></td>
+        <td ng-bind="x.name"></td>
+    </tr>
+</table>
