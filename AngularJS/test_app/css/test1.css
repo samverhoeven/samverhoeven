@@ -25,3 +25,7 @@ form input.ng-touched.ng-invalid{
 form input.ng-touched.ng-valid{
     background-color: lightgreen;
 }
+
+.logo img{
+    width: 20px;
+}

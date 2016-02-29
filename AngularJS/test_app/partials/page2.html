@@ -21,10 +21,12 @@
 <table>
     <tr>
         <th>Index</th>
+        <th>Logo</th>
         <th>Team</th>
     </tr>
     <tr ng-repeat="x in footballData">
         <td ng-bind="$index + 1"></td>
+        <td class="logo"><img src="{{x.crestUrl}}" alt="logo"/></td>
         <td ng-bind="x.name"></td>
     </tr>
 </table>
