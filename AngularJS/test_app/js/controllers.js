@@ -40,10 +40,6 @@ controllers.controller('myCtrl1', function ($scope, $location, $http) {
         $scope.visible = !$scope.visible;
     };
 
-    console.log($scope);
-});
-
-controllers.controller("myCtrl2", function ($scope, $http) {
     var url1 = "https://graph.facebook.com/cocacolabelgium/feed?fields=message,created_time,picture&since=2016-01-01&access_token=438252053041957|IHjpcd9zGhWesX5EuwO2_77pOH8&callback=JSON_CALLBACK";
     $http.jsonp(url1).then(function (response) {
         $scope.fbData = response.data.data;
@@ -53,17 +49,90 @@ controllers.controller("myCtrl2", function ($scope, $http) {
     $scope.orderFBByMe = function (x) {
         $scope.myOrderFBBy = x;
     };
+});
 
-    var url2 = "http://api.football-data.org/v1/soccerseasons/398/teams?callback=JSON_CALLBACK";
+controllers.controller("leaguesCtrl", function ($scope, $http, $rootScope) {
+    var leaguesUrl = "http://api.football-data.org/v1/soccerseasons";
+    
+    $scope.filterValues = [394,396,398,399,401]; //id's van Bundesliga, Ligue1, Premier League, Primera Division, Seria A
+    $scope.leagueFilter = function(value){//filter om enkel de competities in $scope.filterValue te weergeven
+        return ($scope.filterValues.indexOf(value.id)!==-1);
+    };
+
+    $http({
+        method: "GET",
+        url: leaguesUrl,
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
+    }).then(function (response) {
+        $scope.leaguesData = response.data;
+        console.log(response.data);
+    });
+});
+
+controllers.controller("tableCtrl", function ($scope, $http, $rootScope, $routeParams) {
+    var leaguesUrl = "http://api.football-data.org/v1/soccerseasons";
+    
+    $scope.filterValues = [394,396,398,399,401]; //id's van Bundesliga, Ligue1, Premier League, Primera Division, Seria A
+    $scope.leagueFilter = function(value){//filter om enkel de competities in $scope.filterValue te weergeven
+        return ($scope.filterValues.indexOf(value.id)!==-1);
+    };
+
+    $http({
+        method: "GET",
+        url: leaguesUrl,
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
+    }).then(function (response) {
+        $scope.leaguesData = response.data;
+        console.log(response.data);
+    });
+    
+    var param = $routeParams.leagueId;
+    
+    var regex = /.*?(\d+)$/;
+    
+    var url2 = "http://api.football-data.org/v1/soccerseasons/" + param + "/leagueTable";
 
     $http({
         method: "GET",
         url: url2,
-        headers: {"X-Auth-Token": "ca3b6f7b377b44ab9b04d3cdc20fc3ca"}
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
     }).then(function (response) {
-        $scope.footballData = response.data.teams;
-        console.log($scope.footballData);
+        $scope.leaguetableData = response.data;
+
+        for (i = 0; i < $scope.leaguetableData.standing.length; i++) { //teamId toevoegen aan object
+            var teamId = regex.exec($scope.leaguetableData.standing[i]._links.team.href);
+            $scope.leaguetableData.standing[i].teamId = teamId[1];
+        }
+        console.log(response.data);
     });
 });
 
+controllers.controller("teamCtrl", function ($scope, $http, $routeParams, $rootScope) {
+    var param = $routeParams.teamId;
+    var urlTeam = "http://api.football-data.org/v1/teams/" + param + "";
+    var urlSpelers = "http://api.football-data.org/v1/teams/" + param + "/players";
+
+    $scope.orderDir = true;
+
+    $http({
+        method: "GET",
+        url: urlTeam,
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
+    }).then(function (response) {
+        $scope.teamData = response.data;
+    });
+
+    $http({
+        method: "GET",
+        url: urlSpelers,
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
+    }).then(function (response) {
+        $scope.spelersData = response.data.players;
+    });
+
+    $scope.orderPlayersByMe = function (x) {
+        $scope.orderPlayersBy = x;
+        $scope.orderDir = !$scope.orderDir;
+    };
+});
 

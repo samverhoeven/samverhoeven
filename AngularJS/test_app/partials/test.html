@@ -1,4 +1,4 @@
-<h2>myCtrl1</h2>
+<h2>Probeersels</h2>
 <hr>
 <p>Name: <input type="text" ng-model="name"></p>
 <h3>Hello <span ng-bind="name"></span></h3>
@@ -76,3 +76,18 @@ Full Name: (via expressions) <span ng-bind="person.firstName + ' ' + person.last
         </div>
     </div>
 </form>
+<hr>
+<p>Facebook berichten van Coca-Cola:</p>
+<p>Zoeken in berichten: <input ng-model="fbTest" type="text"/></p>
+<table>
+    <tr>
+        <th ng-click="orderFBByMe($index)">Index</th>
+        <th ng-click="orderFBByMe('-created_time')">Date</th> <!-- minteken voor created_time bepaald ascending of descending -->
+        <th ng-click="orderFBByMe('message')">Message</th>
+    </tr>
+    <tr ng-repeat="x in fbData| orderBy: myOrderFBBy | filter : fbTest">
+        <td ng-bind="$index + 1"></td>
+        <td ng-bind="x.created_time"></td>
+        <td ng-bind="x.message"></td>
+    </tr>
+</table>

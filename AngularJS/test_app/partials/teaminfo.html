@@ -1,0 +1,38 @@
+<h2>Teaminfo</h2>
+<hr>
+<h3 ng-bind="teamData.name"></h3>
+<table>
+    <tr>
+        <td>Afkorting</td>
+        <td ng-bind="teamData.code"></td>
+    </tr>
+    <tr>
+        <td>Logo</td>
+        <td class="logo"><img src="{{teamData.crestUrl}}" alt="logo"></td>
+    </tr>
+    <tr>
+        <td>Team marktwaarde</td>
+        <td ng-bind="teamData.squadMarketValue"></td>
+    </tr>
+</table>
+<hr>
+<p>Zoeken in spelers: <input ng-model="filter" type="text"/></p>
+<h3>Spelers</h3>
+<table>
+    <tr>
+        <th ng-click="orderPlayersByMe('jerseyNumber')">Rugnummer</th>
+        <th ng-click="orderPlayersByMe('name')">Naam</th>
+        <th>Positie</th>
+        <th>Nationaliteit</th>
+        <th ng-click="orderPlayersByMe('dateOfBirth')">Geboren</th>
+        <th>Marktwaarde</th>
+    </tr>
+    <tr ng-repeat="x in spelersData | orderBy: orderPlayersBy : orderDir | filter: filter">
+        <td ng-bind="x.jerseyNumber"></td>
+        <td ng-bind="x.name"></td>
+        <td ng-bind="x.position"></td>
+        <td ng-bind="x.nationality"></td>
+        <td ng-bind="x.dateOfBirth"></td>
+        <td ng-bind="x.marketValue"></td>
+    </tr>
+</table>

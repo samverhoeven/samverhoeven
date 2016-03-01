@@ -9,6 +9,7 @@ app.run(function ($rootScope) {
     $rootScope.fullName = function () {
         return $rootScope.firstName + " " + $rootScope.lastName;
     };
+    $rootScope.footballAuth = "ca3b6f7b377b44ab9b04d3cdc20fc3ca";
 });
 
 app.filter('myFormat', function () {
@@ -26,20 +27,27 @@ app.filter('myFormat', function () {
     };
 });
 
-app.config(["$routeProvider",
-    function ($routeProvider) {
-        $routeProvider.
-                when("/page1",{
-                    templateUrl: "partials/page1.html",
-                    controller: "myCtrl1"
-        }).
-                when("/page2",{
-                    templateUrl: "partials/page2.html",
-                    controller: "myCtrl2"
-        }).
-                otherwise({
-                    redirectTo: "/page1"
-        });
-    }]);
+app.config(function ($routeProvider) {
+    $routeProvider.
+            when("/test", {
+                templateUrl: "partials/test.html",
+                controller: "myCtrl1"
+            }).
+            when("/competities", {
+                templateUrl: "partials/competities.html",
+                controller: "leaguesCtrl"
+            }).
+            when("/competities/:leagueId", {
+                templateUrl: "partials/rangschikking.html",
+                controller: "tableCtrl"
+            }).
+            when("/teams/:teamId", {
+                templateUrl: "partials/teaminfo.html",
+                controller: "teamCtrl"
+            }).
+            otherwise({
+                redirectTo: "/competities"
+            });
+});
 
 

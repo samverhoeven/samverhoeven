@@ -8,23 +8,23 @@
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/menu.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/MenuController.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/web/scripts/js/pizzeria.js</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/routing_dev.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Entity/Bestelling.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/AppKernel.php</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/config.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Entity/Klant.php</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/config.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/routing.yml</file>
-            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/autoload.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/FOSUserBundle/views/Layout.html.twig</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/autoload.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/security.yml</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/afrekening.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/AppBundle.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/WinkelmandjeController.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/config/services.yml</file>
+            <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/AppCache.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/AfrekenenController.php</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/app/Resources/views/Pizzeria/winkelmandje.html.twig</file>
             <file>file:/C:/xampp/htdocs/samverhoeven/Symfony/pizzeria/src/AppBundle/Controller/IndexController.php</file>

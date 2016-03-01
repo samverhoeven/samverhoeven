@@ -1,0 +1,29 @@
+<h2>Rangschikking</h2>
+<hr>
+<p>Selecteer een competitie:</p>
+<select ng-model="selectedLeague" ng-options="x.caption for x in leaguesData | filter: leagueFilter"></select>
+<hr>
+<p>Zoeken in rangschikking: <input ng-model="filter" type="text"/></p>
+<h3 ng-bind="leaguetableData.leagueCaption"></h3>
+<table>
+    <tr>
+        <th>Positie</th>
+        <th>Logo</th>
+        <th>Team</th>
+        <th>Punten</th>
+        <th>W</th>
+        <th>G</th>
+        <td>V</td>
+        <th>DS</th>
+    </tr>
+    <tr ng-repeat="x in leaguetableData.standing | filter : filter">
+        <td ng-bind="x.position"></td>
+        <td class="logo"><img src="{{x.crestURI}}" alt="logo"/></td>
+        <td ><a href="{{'#/teams/' + x.teamId}}" ng-bind="x.teamName"></a></td>
+        <td ng-bind="x.points"></td>
+        <td ng-bind="x.wins"></td>
+        <td ng-bind="x.draws"></td>
+        <td ng-bind="x.losses"></td>
+        <td ng-bind="x.goalDifference"></td>
+    </tr>
+</table>
