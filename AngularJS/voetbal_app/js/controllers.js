@@ -1,56 +1,5 @@
 var controllers = angular.module("controllers", []);
 
-controllers.controller('myCtrl1', function ($scope, $location, $http) {
-    $scope.myUrl = $location.absUrl();
-
-    $http.get("http://www.w3schools.com/angular/customers.php").then(function (response) {
-        $scope.myData = response.data.records;
-        console.log($scope.myData);
-    });
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
-    $scope.person = {firstName: "Sam", lastName: "Verhoeven"};
-    $scope.getal = 1;
-    $scope.numbers = [4, 8, 68, 99, 105];
-    $scope.names = [
-        {name: 'Jani', country: 'Norway'},
-        {name: 'Hege', country: 'Sweden'},
-        {name: 'Kai', country: 'Denmark'}
-    ];
-    $scope.count = 0;
-    $scope.visible = false;
-
-    $scope.fullName = function () {
-        return $scope.firstName + " " + $scope.lastName;
-    };
-    $scope.arraySum = function (array) {
-        var total = 0;
-        for (var i = 0; i < array.length; i++) {
-            total += array[i];
-        }
-        return total;
-    };
-    $scope.orderByMe = function (x) {
-        $scope.myOrderBy = x;
-    };
-    $scope.countFunction = function () {
-        $scope.count++;
-    };
-    $scope.toggleShow = function () {
-        $scope.visible = !$scope.visible;
-    };
-
-    var url1 = "https://graph.facebook.com/cocacolabelgium/feed?fields=message,created_time,picture&since=2016-01-01&access_token=438252053041957|IHjpcd9zGhWesX5EuwO2_77pOH8&callback=JSON_CALLBACK";
-    $http.jsonp(url1).then(function (response) {
-        $scope.fbData = response.data.data;
-        console.log($scope.fbData);
-    });
-
-    $scope.orderFBByMe = function (x) {
-        $scope.myOrderFBBy = x;
-    };
-});
-
 controllers.controller("leaguesCtrl", function ($scope, $http, $rootScope) {
     var leaguesUrl = "http://api.football-data.org/v1/soccerseasons";
 
@@ -109,11 +58,11 @@ controllers.controller("tableCtrl", function ($scope, $http, $rootScope, $routeP
 
             var competitionId = regex.exec($scope.leaguetableData._links.soccerseason.href);
             $scope.leaguetableData.competitionId = competitionId[1]; //zet competitionId in leaguetableData adhv regex
-           
+
             /*url veranderen als andere competitie geselecteerd wordt in dropdown menu
              * false argument binnen $location path duid er op dat pagina niet ververst moet worden*/
             //$location.path("/competities/" + $scope.leaguetableData.competitionId, false);
-            
+
             //Veranderen van url zonder refresh adhv ngSilentLocation
             $ngSilentLocation.silent("/competities/" + $scope.leaguetableData.competitionId);
         });
@@ -142,8 +91,58 @@ controllers.controller("teamCtrl", function ($scope, $http, $routeParams, $rootS
         url: urlSpelers,
         headers: {"X-Auth-Token": $rootScope.footballAuth}
     }).then(function (response) {
-
         $scope.spelersData = response.data.players;
+        for (i = 0; i < $scope.spelersData.length; i++) {
+            //marketValue omvormen van string naar int
+            if ($scope.spelersData[i].marketValue != null) {//checken of er een marktwaarde is gegeven
+                $scope.spelersData[i].marketValue = $scope.spelersData[i].marketValue.replace(/(,|€|\s)/g, "");
+                $scope.spelersData[i].marketValue = parseInt($scope.spelersData[i].marketValue);
+            } else {//als marktwaarde niet gegeven is, marketValue uit object verwijderen en marketValueNB in de plaats zetten
+                delete $scope.spelersData[i]['marketValue'];
+                $scope.spelersData[i].marketValueNB = "Niet bekend";
+            }
+
+            //positions vertalen naar Nederlands
+            var position = "";
+            switch ($scope.spelersData[i].position) {
+                case "Keeper":
+                    position = "Doelman";
+                    break;
+                case "Centre Back":
+                    position = "Centrale Verdediger";
+                    break;
+                case "Left-Back":
+                    position = "Linkse Verdediger";
+                    break;
+                case "Right-Back":
+                    position = "Rechtse Verdediger";
+                    break;
+                case "Defensive Midfield":
+                    position = "Verdedigende Middenvelder";
+                    break;
+                case "Central Midfield":
+                    position = "Centrale Middenvelder";
+                    break;
+                case "Attacking Midfield":
+                    position = "Aanvallende Middenvelder";
+                    break;
+                case "Right Wing":
+                    position = "Rechtse Vleugelspeler";
+                    break;
+                case "Left Wing":
+                    position = "Linkse Vleugelspeler";
+                    break;
+                case "Secondary Striker":
+                    position = "Tweede Spits";
+                    break;
+                case "Centre Forward":
+                    position = "Spits";
+                    break;
+                default:
+                    position = "";
+            }
+            $scope.spelersData[i].position = position;
+        }
     });
 
     $scope.orderPlayersByMe = function (x) {//om spelers te ranschikking op bepaalde eigenschap

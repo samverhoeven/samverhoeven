@@ -4,24 +4,21 @@
         <title>AngularJS Test</title>
         <meta charset="windows-1252">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/test1.css" rel="stylesheet"/>
+        <link href="css/voetbal.css" rel="stylesheet"/>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
         <script src="js/ngSilent.js" type="text/javascript"></script>
     </head>
     <body>
-        <div ng-app="myApp">
-            <h1>myApp</h1>
-            <hr>
-            First Name: <input type="text" ng-model="firstName"><br>
-            Last Name: <input type="text" ng-model="lastName"><br>
-            Full Name: (buiten myCtrl, via $rootScope) <span ng-bind='fullName() | uppercase'></span> (filter uppercase)
-            <hr>
-            <ul>
-                <li><a href="#/test">Test</a></li>
-                <li><a href="#/competities">Competities</a></li>
-            </ul>
-            <hr>
+        <div id="inhoud" ng-app="myApp">
+            <header>
+                <div class="container">
+                    <h1>Voetbal App</h1>
+                    <ul>
+                        <li><a href="#/competities">Competities</a></li>
+                    </ul>
+                </div>
+            </header>
             <div ng-view></div>
         </div>
 
