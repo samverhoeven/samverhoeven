@@ -72,26 +72,73 @@ controllers.controller("tableCtrl", function ($scope, $http, $rootScope, $routeP
 });
 
 controllers.controller("teamCtrl", function ($scope, $http, $routeParams, $rootScope) {
+    var regex = /.*?(\d+)$/;
     var param = $routeParams.teamId;
     var urlTeam = "http://api.football-data.org/v1/teams/" + param + "";
+    var urlFixtures = "http://api.football-data.org/v1/teams/" + param + "/fixtures";
     var urlSpelers = "http://api.football-data.org/v1/teams/" + param + "/players";
+    var vandaag = new Date();
 
     $scope.orderDir = true;
+    $scope.fixturesVisible = false;
+    $scope.playersVisible = false;
 
     $http({//teamgegevens laden
         method: "GET",
         url: urlTeam,
         headers: {"X-Auth-Token": $rootScope.footballAuth}
-    }).then(function (response) {
-        $scope.teamData = response.data;
+    }).success(function (response) {
+        $scope.teamData = response;
+        console.log($scope.teamData);
+    }).error(function (error) {
+        console.log("error teamData");
+    });
+
+    $http({//wedstrijden laden
+        method: "GET",
+        url: urlFixtures,
+        headers: {"X-Auth-Token": $rootScope.footballAuth}
+    }).success(function (response) {
+        $scope.fixturesData = response;
+        var prevFixtures = [];
+        var nextFixtures = [];
+        for (i = 0; i < $scope.fixturesData.fixtures.length; i++) {
+            //var fixtureDate = new Date($scope.fixturesData.fixtures[i].date);
+            if ($scope.fixturesData.fixtures[i].status == "FINISHED") { //matchen opdelen in gespeelde en nog te komen matchen
+                prevFixtures.push($scope.fixturesData.fixtures[i]);
+            } else {
+                nextFixtures.push($scope.fixturesData.fixtures[i]);
+            }
+        }
+        $scope.prev5Fixtures = prevFixtures.slice(prevFixtures.length - 5, prevFixtures.length);//laatste 5 matchen
+        $scope.next5Fixtures = nextFixtures.slice(0, 5);//volgende 5 matchen
+
+        for (i = 0; i < $scope.prev5Fixtures.length; i++) {//bepalen welke ploeg gewonnen heeft
+            if ($scope.prev5Fixtures[i].result.goalsHomeTeam > $scope.prev5Fixtures[i].result.goalsAwayTeam) {
+                $scope.prev5Fixtures[i].winner = $scope.prev5Fixtures[i].homeTeamName;
+            }else if($scope.prev5Fixtures[i].result.goalsHomeTeam < $scope.prev5Fixtures[i].result.goalsAwayTeam){
+                $scope.prev5Fixtures[i].winner = $scope.prev5Fixtures[i].awayTeamName;
+            }else{
+                $scope.prev5Fixtures[i].winner = "DRAW";
+            }
+            
+            var awayTeamId = regex.exec($scope.prev5Fixtures[i]._links.awayTeam.href);
+            var homeTeamId = regex.exec($scope.prev5Fixtures[i]._links.homeTeam.href);
+        }
+        
+        console.log($scope.prev5Fixtures);
+        console.log($scope.next5Fixtures);
+
+    }).error(function (error) {
+        console.log("error fixturesData");
     });
 
     $http({//gegevens van spelers van bepaald team laden
         method: "GET",
         url: urlSpelers,
         headers: {"X-Auth-Token": $rootScope.footballAuth}
-    }).then(function (response) {
-        $scope.spelersData = response.data.players;
+    }).success(function (response) {
+        $scope.spelersData = response.players;
         for (i = 0; i < $scope.spelersData.length; i++) {
             //marketValue omvormen van string naar int
             if ($scope.spelersData[i].marketValue != null) {//checken of er een marktwaarde is gegeven
@@ -143,11 +190,27 @@ controllers.controller("teamCtrl", function ($scope, $http, $routeParams, $rootS
             }
             $scope.spelersData[i].position = position;
         }
+    }).error(function (error) {
+        console.log("error spelersData");
     });
 
     $scope.orderPlayersByMe = function (x) {//om spelers te ranschikking op bepaalde eigenschap
         $scope.orderPlayersBy = x;
         $scope.orderDir = !$scope.orderDir;
+    };
+
+    $scope.toggleShowFixtures = function () {
+        $scope.fixturesVisible = !$scope.fixturesVisible;
+        if ($scope.playersVisible && $scope.fixturesVisible) {
+            $scope.playersVisible = false;
+        }
+    };
+
+    $scope.toggleShowPlayers = function () {
+        $scope.playersVisible = !$scope.playersVisible;
+        if ($scope.playersVisible && $scope.fixturesVisible) {
+            $scope.fixturesVisible = false;
+        }
     };
 });
 
